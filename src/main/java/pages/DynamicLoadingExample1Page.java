@@ -1,3 +1,7 @@
+// This class represents the Dynamic Loading Example 1 Page of the application.
+// It provides methods to interact with the page elements and retrieve information.
+// The constructor takes a WebDriver instance to interact with the browser.
+
 package pages;
 
 import org.openqa.selenium.By;
@@ -18,12 +22,14 @@ public class DynamicLoadingExample1Page {
         this.driver=driver;
     }
 
+    // Clicks the Start button and waits for the loading indicator to disappear.
     public void clickStartButton(){
         driver.findElement(startButton).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(loadingIndicator)));
     }
 
+    // Retrieves the text of the finish element.
     public String getFinishText(){
         return driver.findElement(finishText).getText();
     }

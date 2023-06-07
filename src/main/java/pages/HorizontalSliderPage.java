@@ -1,3 +1,6 @@
+// This class represents the Horizontal Slider Page of the application.
+// It provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
+
 package pages;
 
 import org.openqa.selenium.By;
@@ -14,12 +17,14 @@ public class HorizontalSliderPage {
         this.driver=driver;
     }
 
+    // Moves the slider to the right by pressing the right arrow key
     public void moveSliderRight(int value){
         for (int i=0;i<value;i++){
             driver.findElement(slider).sendKeys(Keys.ARROW_RIGHT);
         }
     }
 
+    // Returns the text value of the range element
     public String getRange(){
         return driver.findElement(range).getText();
     }

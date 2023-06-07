@@ -1,3 +1,7 @@
+// This class represents the Dropdown Page of the application.
+// It provides methods to interact with the dropdown list.
+// The constructor takes a WebDriver instance to interact with the browser.
+
 package pages;
 
 import org.openqa.selenium.By;
@@ -16,16 +20,19 @@ public class DropdownPage {
         this.driver=driver;
     }
 
+    // Selects the specified option from the dropdown list.
     public void selectFromDropdown(String option){
         findDropdownElement().selectByVisibleText(option);
     }
 
+    // Returns a list of selected options from the dropdown list.
     public List<String> getSelectedOptions(){
         List<WebElement> selectedElements =
                 findDropdownElement().getAllSelectedOptions();
         return selectedElements.stream().map(e->e.getText()).collect(Collectors.toList());
     }
 
+    // Finds and returns the dropdown element as a Select object.
     private Select findDropdownElement(){
         return new Select(driver.findElement(dropdownList));
     }

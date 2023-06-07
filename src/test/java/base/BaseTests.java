@@ -1,3 +1,6 @@
+// This class serves as the base class for all test classes in the test automation framework.
+// It initializes the WebDriver instance, sets up the ChromeDriver using WebDriverManager, and defines common setup and teardown methods.
+
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -15,20 +18,23 @@ public class BaseTests {
 
     @BeforeClass
     public void setUp() {
-        //System.setProperty("webdriver.chrome.driver","resources/chromedriver.exe");
+        // Set up the ChromeDriver using WebDriverManager
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         goHome();
 
+        // Initialize the homePage object
         homePage = new HomePage(driver);
     }
 
     @BeforeMethod
+    // Navigate to the home page URL before each test method
     public void goHome(){
         driver.get("https://the-internet.herokuapp.com/");
     }
 
     @AfterClass
+    // Quit the WebDriver instance after all tests have finished
     public void tearDown() {
         driver.quit();
     }

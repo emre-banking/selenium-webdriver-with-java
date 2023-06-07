@@ -1,3 +1,6 @@
+// This class represents the Hovers Page of the application.
+// It provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
+
 package pages;
 
 import org.openqa.selenium.By;
@@ -14,6 +17,7 @@ public class HoversPage {
         this.driver=driver;
     }
 
+    // Performs a hover action on the specified figure element
     public FigureCaption hoverOverFigure(int index){
         WebElement figure = driver.findElements(figureBox).get(index - 1);
         Actions actions = new Actions(driver);
@@ -29,18 +33,23 @@ public class HoversPage {
         public FigureCaption(WebElement caption) {
             this.caption = caption;
         }
+
+        // Checks if the caption is displayed
         public boolean isCaptionDisplayed(){
             return caption.isDisplayed();
         }
 
+        // Returns the text of the header element within the caption
         public String getTitle(){
             return caption.findElement(header).getText();
         }
 
+        // Returns the href attribute value of the link element within the caption
         public String getLink(){
             return caption.findElement(link).getAttribute("href");
         }
 
+        // Returns the text of the link element within the caption
         public String getLinkText(){
             return caption.findElement(link).getText();
         }

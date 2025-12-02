@@ -10,14 +10,9 @@ import static org.testng.Assert.assertEquals;
 public class ClickTests extends BaseTests {
 
     @Test
-    public void testContextClick() throws InterruptedException {
-        // Click on the Context Menu link in the home page and navigate to the Context Menu page
+    public void testContextClick() {
         var contextMenuPage = homePage.clickContextMenu();
-
-        // Perform a context click action on the target element
         contextMenuPage.contextClick();
-
-        // Verify the text of the alert dialog and accept it
         assertEquals(contextMenuPage.alert_getText(), "You selected a context menu");
         contextMenuPage.alert_clickToAccept();
     }

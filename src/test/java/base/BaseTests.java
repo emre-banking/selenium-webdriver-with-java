@@ -14,10 +14,12 @@ import utils.ConfigReader;
 public class BaseTests {
     protected WebDriver driver;
     protected HomePage homePage;
+    private String baseUrl;
 
     // Set up WebDriver and initialize the home page
     @BeforeClass
     public void setUp() {
+        baseUrl = ConfigReader.get("baseUrl");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         homePage = new HomePage(driver);
@@ -26,12 +28,14 @@ public class BaseTests {
     // Navigate to the home page URL before each test method
     @BeforeMethod
     public void goHome() {
-        driver.get(ConfigReader.get("baseUrl"));
+        driver.get(baseUrl);
     }
 
     // Quit the WebDriver instance after all tests have finished
     @AfterClass
     public void tearDown() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

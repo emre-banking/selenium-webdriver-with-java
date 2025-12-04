@@ -9,6 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
+import utils.ConfigReader;
 
 public class BaseTests {
     private WebDriver driver;
@@ -27,8 +28,8 @@ public class BaseTests {
 
     // Navigate to the home page URL before each test method
     @BeforeMethod
-    public void goHome(){
-        driver.get("https://the-internet.herokuapp.com/");
+    public void goHome() {
+        driver.get(ConfigReader.get("baseUrl"));
     }
 
     // Quit the WebDriver instance after all tests have finished

@@ -12,17 +12,14 @@ import pages.HomePage;
 import utils.ConfigReader;
 
 public class BaseTests {
-    private WebDriver driver;
+    protected WebDriver driver;
     protected HomePage homePage;
 
+    // Set up WebDriver and initialize the home page
     @BeforeClass
     public void setUp() {
-        System.setProperty(
-                "webdriver.chrome.driver",
-                "src/main/resources/chromedriver.exe"
-        );
         driver = new ChromeDriver();
-        goHome();
+        driver.manage().window().maximize();
         homePage = new HomePage(driver);
     }
 

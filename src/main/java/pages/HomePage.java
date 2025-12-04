@@ -51,7 +51,7 @@ public class HomePage {
     }
 
     private void clickLink(String linkText){
-        driver.findElement(By.linkText(linkText)).click();
+        driver.findElement(By.xpath("//a[normalize-space()='" + linkText + "']")).click();
     }
 
     private <T> T navigateTo(String linkText, Class<T> pageClass){

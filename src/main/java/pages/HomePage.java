@@ -1,6 +1,4 @@
-// This class represents the Home Page of the application.
-// It provides methods to navigate to different pages and return the respective Page objects.
-// The constructor takes a WebDriver instance to interact with the browser.
+// This class provides methods to navigate to the different pages and return the respective Page objects.
 
 package pages;
 
@@ -12,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class HomePage {
+    private static final Duration TIMEOUT = Duration.ofSeconds(5);
     private final WebDriver driver;
 
     public HomePage(WebDriver driver){
@@ -55,7 +54,7 @@ public class HomePage {
     }
 
     private void clickLink(String linkText){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         By locator = By.xpath("//a[normalize-space()='" + linkText + "']");
         WebElement link = wait.until(ExpectedConditions.elementToBeClickable(locator));
         link.click();

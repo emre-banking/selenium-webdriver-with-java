@@ -12,7 +12,7 @@ public class WaitTests extends BaseTests {
     @Test
     public void testWaitUntilHidden(){
         // Click on the Dynamic Loading link in the home page and navigate to Example 1 page
-        var loadingPage = homePage.clickDynamicLoading().clickExample1();
+        var loadingPage = homePage.navigateToDynamicLoading().clickExample1();
 
         // Click the Start button on the Example 1 page
         loadingPage.clickStartButton();

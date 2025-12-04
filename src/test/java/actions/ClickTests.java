@@ -10,10 +10,10 @@ import static org.testng.Assert.assertEquals;
 public class ClickTests extends BaseTests {
 
     @Test
-    public void testContextClick() {
-        var contextMenuPage = homePage.clickContextMenu();
+    public void alertAppearsAfterContextClick() {
+        var contextMenuPage = homePage.navigateToContextMenu();
         contextMenuPage.contextClick();
-        assertEquals(contextMenuPage.alert_getText(), "You selected a context menu");
-        contextMenuPage.alert_clickToAccept();
+        assertEquals(contextMenuPage.getAlertText(), "You selected a context menu");
+        contextMenuPage.acceptAlert();
     }
 }

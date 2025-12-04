@@ -13,7 +13,7 @@ public class KeyPressesTests extends BaseTests {
     @Test
     public void testBackSpace(){
         // Click on the Key Presses link in the home page and navigate to the Key Presses page
-        var keyPressesPage = homePage.clickKeyPresses();
+        var keyPressesPage = homePage.navigateToKeyPresses();
 
         // Enter the text "A" followed by the BACK_SPACE key
         keyPressesPage.enterText("A" + Keys.BACK_SPACE);
@@ -25,7 +25,7 @@ public class KeyPressesTests extends BaseTests {
     @Test
     public void testPi(){
         // Click on the Key Presses link in the home page and navigate to the Key Presses page
-        var keyPressesPage = homePage.clickKeyPresses();
+        var keyPressesPage = homePage.navigateToKeyPresses();
 
         // Enter the Pi value using a keyboard shortcut
         keyPressesPage.enterPi();

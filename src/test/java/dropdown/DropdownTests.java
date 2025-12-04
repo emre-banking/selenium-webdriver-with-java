@@ -4,7 +4,6 @@ package dropdown;
 
 import base.BaseTests;
 import org.testng.annotations.Test;
-import pages.DropdownPage;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -14,7 +13,7 @@ public class DropdownTests extends BaseTests {
     @Test
     public void testSelectOption(){
         // Click on the Dropdown link in the home page and navigate to the Dropdown page
-        var dropdownPage = homePage.clickDropdown();
+        var dropdownPage = homePage.navigateToDropdown();
 
         // Select an option from the dropdown
         String option = "Option 1";

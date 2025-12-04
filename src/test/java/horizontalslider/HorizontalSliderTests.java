@@ -12,7 +12,7 @@ public class HorizontalSliderTests extends BaseTests {
     @Test
     public void testSlider(){
         // Click on the Horizontal Slider link in the home page and navigate to the Horizontal Slider page
-        var sliderPage = homePage.clickHorizontalSlider();
+        var sliderPage = homePage.navigateToHorizontalSlider();
 
         // Move the slider to the right by a specified value
         sliderPage.moveSliderRight(6);

@@ -15,7 +15,7 @@ public class LoginTests extends BaseTests {
     @Test
     public void testSuccesfulLogin(){
         // Click on the Form Authentication link in the home page and navigate to the Login page
-        LoginPage loginPage = homePage.clickFormAuthentication();
+        LoginPage loginPage = homePage.navigateToFormAuthentication();
 
         // Enter the username and password
         loginPage.enterUsername("tomsmith");

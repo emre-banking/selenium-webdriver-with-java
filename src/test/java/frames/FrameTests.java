@@ -12,7 +12,7 @@ public class FrameTests extends BaseTests {
     @Test
     public void testTextEditor(){
         // Click on the WYSIWYG Editor link in the home page and navigate to the WYSIWYG Editor page
-        var editorPage = homePage.clickWYSIWYGEditor();
+        var editorPage = homePage.navigateToWYSIWYGEditor();
 
         // Clear the text area in the editor, set new text, and click the "Decrease Indent" button
         editorPage.clearTextArea();

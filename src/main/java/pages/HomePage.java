@@ -9,39 +9,39 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    public ContextMenuPage clickContextMenu(){
+    public ContextMenuPage navigateToContextMenu(){
         return navigateTo(HomeLinks.CONTEXT_MENU, ContextMenuPage.class);
     }
 
-    public DropdownPage clickDropdown(){
+    public DropdownPage navigateToDropdown(){
         return navigateTo(HomeLinks.DROPDOWN, DropdownPage.class);
     }
 
-    public DynamicLoadingPage clickDynamicLoading(){
+    public DynamicLoadingPage navigateToDynamicLoading(){
         return navigateTo(HomeLinks.DYNAMIC_LOADING, DynamicLoadingPage.class);
     }
 
-    public HorizontalSliderPage clickHorizontalSlider(){
+    public HorizontalSliderPage navigateToHorizontalSlider(){
         return navigateTo(HomeLinks.HORIZONTAL_SLIDER, HorizontalSliderPage.class);
     }
 
-    public HoversPage clickHovers(){
+    public HoversPage navigateToHovers(){
         return navigateTo(HomeLinks.HOVERS, HoversPage.class);
     }
 
-    public JavaScriptAlertsPage clickJavaScriptAlerts(){
+    public JavaScriptAlertsPage navigateToJavaScriptAlerts(){
         return navigateTo(HomeLinks.JAVASCRIPT_ALERTS, JavaScriptAlertsPage.class);
     }
 
-    public KeyPressesPage clickKeyPresses(){
+    public KeyPressesPage navigateToKeyPresses(){
         return navigateTo(HomeLinks.KEY_PRESSES, KeyPressesPage.class);
     }
 
-    public LoginPage clickFormAuthentication(){
+    public LoginPage navigateToFormAuthentication(){
         return navigateTo(HomeLinks.FORM_AUTHENTICATION, LoginPage.class);
     }
 
-    public WYSIWYGEditorPage clickWYSIWYGEditor(){
+    public WYSIWYGEditorPage navigateToWYSIWYGEditor(){
         return navigateTo(HomeLinks.WYSIWYG_EDITOR, WYSIWYGEditorPage.class);
     }
 }

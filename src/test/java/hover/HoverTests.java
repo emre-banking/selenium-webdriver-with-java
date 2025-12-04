@@ -12,7 +12,7 @@ public class HoverTests extends BaseTests {
     @Test
     public void testHoverUser1(){
         // Click on the Hovers link in the home page and navigate to the Hovers page
-        var hoversPage = homePage.clickHovers();
+        var hoversPage = homePage.navigateToHovers();
 
         // Hover over the first user figure and retrieve the caption
         var caption = hoversPage.hoverOverFigure(1);

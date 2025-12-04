@@ -12,7 +12,7 @@ public class AlertTests extends BaseTests {
     @Test
     public void testAcceptAlert(){
         // Click on the JavaScript Alerts link in the home page and navigate to the JavaScript Alerts page
-        var alertsPage = homePage.clickJavaScriptAlerts();
+        var alertsPage = homePage.navigateToJavaScriptAlerts();
 
         // Click on the "Click for JS Alert" button to trigger an alert
         alertsPage.clickAlertButton();
@@ -27,7 +27,7 @@ public class AlertTests extends BaseTests {
     @Test
     public void testDismissAlert(){
         // Click on the JavaScript Alerts link in the home page and navigate to the JavaScript Alerts page
-        var alertsPage = homePage.clickJavaScriptAlerts();
+        var alertsPage = homePage.navigateToJavaScriptAlerts();
 
         // Click on the "Click for JS Confirm" button to trigger a confirmation alert
         alertsPage.clickConfirmButton();
@@ -43,7 +43,7 @@ public class AlertTests extends BaseTests {
     @Test
     public void testSetInputInAlert(){
         // Click on the JavaScript Alerts link in the home page and navigate to the JavaScript Alerts page
-        var alertsPage = homePage.clickJavaScriptAlerts();
+        var alertsPage = homePage.navigateToJavaScriptAlerts();
 
         // Click on the "Click for JS Prompt" button to trigger a prompt alert
         alertsPage.clickPromptButton();

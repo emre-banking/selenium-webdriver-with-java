@@ -8,12 +8,20 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 
 public class ClickTests extends BaseTests {
+    private static final String expectedAlertText = "You selected a context menu";
 
     @Test
-    public void alertAppearsAfterContextClick() {
+    public void alertShouldShowCorrectMessageAfterRightClick() {
+        // Given
         var contextMenuPage = homePage.navigateToContextMenu();
-        contextMenuPage.contextClick();
-        assertEquals(contextMenuPage.getAlertText(), "You selected a context menu");
+
+        // When
+        contextMenuPage.openContextMenu();
+
+        // Then
+        assertEquals(contextMenuPage.getAlertText(),
+                expectedAlertText,
+                "Alert text should match expected message");
         contextMenuPage.acceptAlert();
     }
 }

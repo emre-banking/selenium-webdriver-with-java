@@ -18,7 +18,7 @@ public class ContextMenuPage extends BasePage {
     }
 
     // Performs a context click on the specified target element.
-    public void contextClick() {
+    public void openContextMenu() {
         actions.contextClick(getHotSpot()).perform();
     }
 

@@ -2,6 +2,7 @@
 
 package pages;
 
+import constants.HomeLinks;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,39 +19,39 @@ public class HomePage {
     }
 
     public ContextMenuPage clickContextMenu(){
-        return navigateTo("Context Menu", ContextMenuPage.class);
+        return navigateTo(HomeLinks.CONTEXT_MENU, ContextMenuPage.class);
     }
 
     public DropdownPage clickDropdown(){
-        return navigateTo("Dropdown", DropdownPage.class);
+        return navigateTo(HomeLinks.DROPDOWN, DropdownPage.class);
     }
 
     public DynamicLoadingPage clickDynamicLoading(){
-        return navigateTo("Dynamic Loading", DynamicLoadingPage.class);
+        return navigateTo(HomeLinks.DYNAMIC_LOADING, DynamicLoadingPage.class);
     }
 
     public HorizontalSliderPage clickHorizontalSlider(){
-        return navigateTo("Horizontal Slider", HorizontalSliderPage.class);
+        return navigateTo(HomeLinks.HORIZONTAL_SLIDER, HorizontalSliderPage.class);
     }
 
     public HoversPage clickHovers(){
-        return navigateTo("Hovers", HoversPage.class);
+        return navigateTo(HomeLinks.HOVERS, HoversPage.class);
     }
 
     public JavaScriptAlertsPage clickJavaScriptAlerts(){
-        return navigateTo("JavaScript Alerts", JavaScriptAlertsPage.class);
+        return navigateTo(HomeLinks.JAVASCRIPT_ALERTS, JavaScriptAlertsPage.class);
     }
 
     public KeyPressesPage clickKeyPresses(){
-        return navigateTo("Key Presses", KeyPressesPage.class);
+        return navigateTo(HomeLinks.KEY_PRESSES, KeyPressesPage.class);
     }
 
     public LoginPage clickFormAuthentication(){
-        return navigateTo("Form Authentication", LoginPage.class);
+        return navigateTo(HomeLinks.FORM_AUTHENTICATION, LoginPage.class);
     }
 
     public WYSIWYGEditorPage clickWYSIWYGEditor(){
-        return navigateTo("WYSIWYG Editor", WYSIWYGEditorPage.class);
+        return navigateTo(HomeLinks.WYSIWYG_EDITOR, WYSIWYGEditorPage.class);
     }
 
     private void clickLink(String linkText){
@@ -60,8 +61,8 @@ public class HomePage {
         link.click();
     }
 
-    private <T> T navigateTo(String linkText, Class<T> pageClass){
-        clickLink(linkText);
+    private <T> T navigateTo(HomeLinks link, Class<T> pageClass){
+        clickLink(link.toString());
         try {
             return pageClass.getDeclaredConstructor(WebDriver.class).newInstance(driver);
         } catch (Exception e) {

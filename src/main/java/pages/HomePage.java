@@ -6,6 +6,10 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 public class HomePage {
     private final WebDriver driver;
@@ -51,7 +55,10 @@ public class HomePage {
     }
 
     private void clickLink(String linkText){
-        driver.findElement(By.xpath("//a[normalize-space()='" + linkText + "']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        By locator = By.xpath("//a[normalize-space()='" + linkText + "']");
+        WebElement link = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        link.click();
     }
 
     private <T> T navigateTo(String linkText, Class<T> pageClass){

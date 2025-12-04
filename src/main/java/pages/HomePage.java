@@ -15,51 +15,51 @@ public class HomePage {
     }
 
     public ContextMenuPage clickContextMenu(){
-        clickLink("Context Menu");
-        return new ContextMenuPage(driver);
+        return navigateTo("Context Menu", ContextMenuPage.class);
     }
 
     public DropdownPage clickDropdown(){
-        clickLink("Dropdown");
-        return new DropdownPage(driver);
+        return navigateTo("Dropdown", DropdownPage.class);
     }
 
     public DynamicLoadingPage clickDynamicLoading(){
-        clickLink("Dynamic Loading");
-        return new DynamicLoadingPage(driver);
+        return navigateTo("Dynamic Loading", DynamicLoadingPage.class);
     }
 
     public HorizontalSliderPage clickHorizontalSlider(){
-        clickLink("Horizontal Slider");
-        return new HorizontalSliderPage(driver);
+        return navigateTo("Horizontal Slider", HorizontalSliderPage.class);
     }
 
     public HoversPage clickHovers(){
-        clickLink("Hovers");
-        return new HoversPage(driver);
+        return navigateTo("Hovers", HoversPage.class);
     }
 
     public JavaScriptAlertsPage clickJavaScriptAlerts(){
-        clickLink("JavaScript Alerts");
-        return new JavaScriptAlertsPage(driver);
+        return navigateTo("JavaScript Alerts", JavaScriptAlertsPage.class);
     }
 
     public KeyPressesPage clickKeyPresses(){
-        clickLink("Key Presses");
-        return new KeyPressesPage(driver);
+        return navigateTo("Key Presses", KeyPressesPage.class);
     }
 
     public LoginPage clickFormAuthentication(){
-        clickLink("Form Authentication");
-        return new LoginPage(driver);
+        return navigateTo("Form Authentication", LoginPage.class);
     }
 
     public WYSIWYGEditorPage clickWYSIWYGEditor(){
-        clickLink("WYSIWYG Editor");
-        return new WYSIWYGEditorPage(driver);
+        return navigateTo("WYSIWYG Editor", WYSIWYGEditorPage.class);
     }
 
     private void clickLink(String linkText){
         driver.findElement(By.linkText(linkText)).click();
+    }
+
+    private <T> T navigateTo(String linkText, Class<T> pageClass){
+        clickLink(linkText);
+        try {
+            return pageClass.getDeclaredConstructor(WebDriver.class).newInstance(driver);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create page: " + pageClass.getSimpleName(), e);
+        }
     }
 }

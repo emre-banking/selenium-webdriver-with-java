@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class HorizontalSliderPage extends BasePage {
 
     private final By slider = By.cssSelector("input[type='range']");
-    private final By range = By.id("range");
 
     public HorizontalSliderPage(WebDriver driver){
         super(driver);

@@ -10,23 +10,17 @@ import static org.testng.Assert.*;
 public class HoverTests extends BaseTests {
 
     @Test
-    public void testHoverUser1(){
-        // Click on the Hovers link in the home page and navigate to the Hovers page
+    public void verifyUser1CaptionOnHover(){
+        // Given
         var hoversPage = homePage.navigateToHovers();
 
-        // Hover over the first user figure and retrieve the caption
+        // When
         var caption = hoversPage.hoverOverFigure(1);
 
-        // Verify that the caption is displayed
-        assertTrue(caption.isCaptionDisplayed());
-
-        // Verify the title of the caption
-        assertEquals(caption.getTitle(), "name: user1");
-
-        // Verify the link text of the caption
-        assertEquals(caption.getLinkText(), "View profile");
-
-        // Verify the link URL of the caption
-        assertTrue(caption.getLink().endsWith("/users/1"));
+        // Then
+        assertTrue(caption.isCaptionDisplayed(), "Caption is not displayed.");
+        assertEquals(caption.getTitle(), "name: user1", "Caption title mismatch.");
+        assertEquals(caption.getLinkText(), "View profile", "Caption link text mismatch.");
+        assertTrue(caption.getLink().endsWith("/users/1"), "Caption link URL is incorrect.");
     }
 }

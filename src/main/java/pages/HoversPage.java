@@ -1,5 +1,4 @@
-// This class represents the Hovers Page of the application.
-// It provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
+// This class provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
 
 package pages;
 
@@ -7,28 +6,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class HoversPage {
-    private WebDriver driver;
-    private By figureBox = By.className("figure");
-    private By boxCaption = By.className("figcaption");
+public class HoversPage extends BasePage{
+    private final By figureBox = By.className("figure");
+    private final By boxCaption = By.className("figcaption");
 
     public HoversPage(WebDriver driver){
-        this.driver=driver;
+        super(driver);
     }
 
     // Performs a hover action on the specified figure element
     public FigureCaption hoverOverFigure(int index){
-        WebElement figure = driver.findElements(figureBox).get(index - 1);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(figure).perform();
+        WebElement figure = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(figureBox)).get(index - 1);
+        new Actions(driver).moveToElement(figure).perform();
         return new FigureCaption(figure.findElement(boxCaption));
     }
 
     public class FigureCaption {
-        private WebElement caption;
-        private By header = By.tagName("h5");
-        private By link = By.tagName("a");
+        private final WebElement caption;
+        private final By header = By.tagName("h5");
+        private final By link = By.tagName("a");
 
         public FigureCaption(WebElement caption) {
             this.caption = caption;
@@ -41,7 +39,8 @@ public class HoversPage {
 
         // Returns the text of the header element within the caption
         public String getTitle(){
-            return caption.findElement(header).getText();
+            wait.until(ExpectedConditions.visibilityOf(caption));
+            return caption.findElement(header).getText().trim();
         }
 
         // Returns the href attribute value of the link element within the caption
@@ -51,7 +50,7 @@ public class HoversPage {
 
         // Returns the text of the link element within the caption
         public String getLinkText(){
-            return caption.findElement(link).getText();
+            return caption.findElement(link).getText().trim();
         }
     }
 }

@@ -15,7 +15,7 @@ public class WaitTests extends BaseTests {
         var loadingPage = homePage.navigateToDynamicLoading().clickExample1();
 
         // Click the Start button on the Example 1 page
-        loadingPage.clickStartButton();
+        loadingPage.clickStartButtonAndWait();
 
         // Wait until the loading spinner is hidden and verify the finish text
         assertEquals(loadingPage.getFinishText(), "Hello World!");

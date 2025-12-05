@@ -11,19 +11,15 @@ import static org.testng.Assert.assertTrue;
 public class LoginTests extends BaseTests {
 
     @Test
-    public void testSuccesfulLogin(){
-        // Click on the Form Authentication link in the home page and navigate to the Login page
+    public void verifySuccessfulLogin(){
+        // Given
         LoginPage loginPage = homePage.navigateToFormAuthentication();
 
-        // Enter the username and password
-        loginPage.enterUsername("tomsmith");
-        loginPage.enterPassword("SuperSecretPassword!");
+        // When
+        SecureAreaPage secureAreaPage = loginPage.login("tomsmith", "SuperSecretPassword!");
 
-        // Click the Login button and navigate to the Secure Area page
-        SecureAreaPage secureAreaPage = loginPage.clickLoginButton();
-
-        // Get the alert text from the Secure Area page and verify that it contains the expected message
+        // Then
         String actualResult = secureAreaPage.getAlertText();
-        assertTrue(actualResult.contains("You logged into a secure area!"));
+        assertTrue(actualResult.contains("You logged into a secure area!"), "Login failed.");
     }
 }

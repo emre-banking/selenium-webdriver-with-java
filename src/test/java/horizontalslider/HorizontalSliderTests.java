@@ -3,21 +3,21 @@
 package horizontalslider;
 
 import base.BaseTests;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 
 public class HorizontalSliderTests extends BaseTests {
 
     @Test
-    public void testSlider(){
-        // Click on the Horizontal Slider link in the home page and navigate to the Horizontal Slider page
+    public void shouldMoveSliderToExpectedValue(){
+        // Given
         var sliderPage = homePage.navigateToHorizontalSlider();
 
-        // Move the slider to the right by a specified value
-        sliderPage.moveSliderRight(6);
+        // When
+        sliderPage.moveSlider(Keys.ARROW_RIGHT, 6);
 
-        // Get the range value from the slider and verify that it matches the expected value
-        assertEquals(sliderPage.getRange(), "3");
+        // Then
+        assertEquals(sliderPage.getSliderValue(), "3", "Slider value mismatch.");
     }
 }

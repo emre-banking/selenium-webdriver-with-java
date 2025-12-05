@@ -1,31 +1,32 @@
-// This class represents the Horizontal Slider Page of the application.
-// It provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
+// This class provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
 
 package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class HorizontalSliderPage {
+public class HorizontalSliderPage extends BasePage {
 
-    private WebDriver driver;
-    private By slider = By.xpath("//input[@value='0']");
-    private By range = By.id("range");
+    private final By slider = By.cssSelector("input[type='range']");
+    private final By range = By.id("range");
 
     public HorizontalSliderPage(WebDriver driver){
-        this.driver=driver;
+        super(driver);
     }
 
     // Moves the slider to the right by pressing the right arrow key
-    public void moveSliderRight(int value){
-        for (int i=0;i<value;i++){
-            driver.findElement(slider).sendKeys(Keys.ARROW_RIGHT);
+    public void moveSlider(Keys direction, int steps) {
+        WebElement sliderElement = wait.until(ExpectedConditions.elementToBeClickable(slider));
+        for (int i = 0; i < steps; i++) {
+            sliderElement.sendKeys(direction);
         }
     }
 
     // Returns the text value of the range element
-    public String getRange(){
-        return driver.findElement(range).getText();
+    public String getSliderValue() {
+        return driver.findElement(slider).getAttribute("value").trim();
     }
 }

@@ -16,8 +16,7 @@ public class LoginTests extends BaseTests {
         LoginPage loginPage = homePage.navigateToFormAuthentication();
 
         // When
-        SecureAreaPage secureAreaPage =
-                loginPage.login(
+        SecureAreaPage secureAreaPage = loginPage.login(
                 "tomsmith",
                 "SuperSecretPassword!"
         );

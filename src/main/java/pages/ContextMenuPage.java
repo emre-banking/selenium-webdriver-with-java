@@ -2,6 +2,7 @@
 
 package pages;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,5 +35,9 @@ public class ContextMenuPage extends BasePage {
 
     private WebElement getHotSpot() {
         return driver.findElement(hotSpotArea);
+    }
+
+    private Alert getAlert() {
+        return driver.switchTo().alert();
     }
 }

@@ -35,8 +35,4 @@ public class BasePage {
             throw new RuntimeException("Failed to create page: " + pageClass.getSimpleName(), e);
         }
     }
-
-    protected Alert getAlert() {
-        return driver.switchTo().alert();
-    }
 }

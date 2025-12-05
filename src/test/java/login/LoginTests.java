@@ -6,6 +6,8 @@ import base.BaseTests;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.SecureAreaPage;
+import utils.ConfigReader;
+
 import static org.testng.Assert.assertTrue;
 
 public class LoginTests extends BaseTests {
@@ -17,8 +19,8 @@ public class LoginTests extends BaseTests {
 
         // When
         SecureAreaPage secureAreaPage = loginPage.login(
-                "tomsmith",
-                "SuperSecretPassword!"
+                ConfigReader.get("username"),
+                ConfigReader.get("password")
         );
 
         // Then

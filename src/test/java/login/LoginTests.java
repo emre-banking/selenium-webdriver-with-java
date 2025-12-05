@@ -23,9 +23,6 @@ public class LoginTests extends BaseTests {
 
         // Then
         String actualResult = secureAreaPage.getAlertText();
-        assertTrue(
-                actualResult.contains("You logged into a secure area!"),
-                "Login failed."
-        );
+        assertTrue(actualResult.contains("You logged into a secure area!"), "Login failed.");
     }
 }

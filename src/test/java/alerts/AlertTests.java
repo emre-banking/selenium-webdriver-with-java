@@ -3,10 +3,12 @@
 package alerts;
 
 import base.BaseTests;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.github.javafaker.Faker;
 import static org.testng.Assert.*;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class AlertTests extends BaseTests {
 
     Faker faker = new Faker();

@@ -3,6 +3,7 @@
 package login;
 
 import base.BaseTests;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.SecureAreaPage;
@@ -10,6 +11,7 @@ import utils.ConfigReader;
 
 import static org.testng.Assert.assertTrue;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class LoginTests extends BaseTests {
 
     @Test

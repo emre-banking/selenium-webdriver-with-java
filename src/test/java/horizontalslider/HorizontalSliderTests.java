@@ -4,9 +4,11 @@ package horizontalslider;
 
 import base.BaseTests;
 import org.openqa.selenium.Keys;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class HorizontalSliderTests extends BaseTests {
 
     @Test

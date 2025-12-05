@@ -3,10 +3,12 @@
 package hover;
 
 import base.BaseTests;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class HoverTests extends BaseTests {
 
     @Test

@@ -3,11 +3,12 @@
 package dropdown;
 
 import base.BaseTests;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class DropdownTests extends BaseTests {
 
     @Test

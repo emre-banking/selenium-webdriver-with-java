@@ -11,19 +11,17 @@ import static org.testng.Assert.assertTrue;
 public class DropdownTests extends BaseTests {
 
     @Test
-    public void testSelectOption(){
-        // Click on the Dropdown link in the home page and navigate to the Dropdown page
+    public void verifyDropdownOptionSelection(){
+        // Given
         var dropdownPage = homePage.navigateToDropdown();
 
-        // Select an option from the dropdown
-        String option = "Option 1";
+        // When
+        final String option = "Option 1";
         dropdownPage.selectFromDropdown(option);
-
-        // Get the selected options from the dropdown
         var selectedOptions = dropdownPage.getSelectedOptions();
 
-        // Verify that only one option is selected and it is the expected option
-        assertEquals(selectedOptions.size(), 1);
-        assertTrue(selectedOptions.contains(option));
+        // Then
+        assertEquals(selectedOptions.size(), 1, "Only one option should be selected.");
+        assertTrue(selectedOptions.contains(option), "Selected option mismatch.");
     }
 }

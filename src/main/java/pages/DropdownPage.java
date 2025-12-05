@@ -17,18 +17,28 @@ public class DropdownPage extends BasePage {
     }
 
     // Selects the specified option from the dropdown list.
-    public void selectFromDropdown(String option){
-        findDropdownElement().selectByVisibleText(option);
+    public void selectFromDropdown(String option) {
+        Select dropdown = findDropdownElement();
+        boolean exists = dropdown.getOptions().stream()
+                .anyMatch(o -> o.getText().equals(option));
+        if (!exists) {
+            throw new IllegalArgumentException("Dropdown option not found: " + option);
+        }
+        dropdown.selectByVisibleText(option);
     }
 
     // Returns a list of selected options from the dropdown list.
-    public List<String> getSelectedOptions(){
-        List<WebElement> selectedElements = findDropdownElement().getAllSelectedOptions();
-        return selectedElements.stream().map(WebElement::getText).collect(Collectors.toList());
+    public List<String> getSelectedOptions() {
+        return findDropdownElement()
+                .getAllSelectedOptions()
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
     }
 
     // Finds and returns the dropdown element as a Select object.
-    private Select findDropdownElement(){
-        return new Select(driver.findElement(dropdownList));
+    private Select findDropdownElement() {
+        WebElement element = driver.findElement(dropdownList);
+        return new Select(element);
     }
-}
+} 

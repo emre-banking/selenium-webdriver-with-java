@@ -16,10 +16,16 @@ public class LoginTests extends BaseTests {
         LoginPage loginPage = homePage.navigateToFormAuthentication();
 
         // When
-        SecureAreaPage secureAreaPage = loginPage.login("tomsmith", "SuperSecretPassword!");
+        SecureAreaPage secureAreaPage =
+                loginPage.login(
+                "tomsmith",
+                "SuperSecretPassword!"
+        );
 
         // Then
         String actualResult = secureAreaPage.getAlertText();
-        assertTrue(actualResult.contains("You logged into a secure area!"), "Login failed.");
+        assertTrue(actualResult.contains(
+                "You logged into a secure area!"),
+                "Login failed.");
     }
 }

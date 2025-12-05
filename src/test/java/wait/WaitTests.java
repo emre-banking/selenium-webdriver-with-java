@@ -4,20 +4,19 @@ package wait;
 
 import base.BaseTests;
 import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 
 public class WaitTests extends BaseTests {
 
     @Test
-    public void testWaitUntilHidden(){
-        // Click on the Dynamic Loading link in the home page and navigate to Example 1 page
-        var loadingPage = homePage.navigateToDynamicLoading().clickExample1();
+    public void verifyContentAppearsAfterLoadingDone(){
+        // Given
+        var loadingPage = homePage.navigateToDynamicLoading().navigateToExample1();
 
-        // Click the Start button on the Example 1 page
+        // When
         loadingPage.clickStartButtonAndWait();
 
-        // Wait until the loading spinner is hidden and verify the finish text
-        assertEquals(loadingPage.getLoadedText(), "Hello World!");
+        // Then
+        assertEquals(loadingPage.getLoadedText(), "Hello World!", "Loaded text mismatch.");
     }
 }

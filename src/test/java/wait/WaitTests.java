@@ -18,6 +18,6 @@ public class WaitTests extends BaseTests {
         loadingPage.clickStartButtonAndWait();
 
         // Wait until the loading spinner is hidden and verify the finish text
-        assertEquals(loadingPage.getFinishText(), "Hello World!");
+        assertEquals(loadingPage.getLoadedText(), "Hello World!");
     }
 }

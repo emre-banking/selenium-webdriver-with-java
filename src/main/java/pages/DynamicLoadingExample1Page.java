@@ -24,7 +24,7 @@ public class DynamicLoadingExample1Page extends BasePage {
     }
 
     // Retrieves the text of the finish element.
-    public String getFinishText() {
+    public String getLoadedText() {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(finishText));
         return element.getText().trim();
     }

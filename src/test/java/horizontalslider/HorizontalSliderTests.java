@@ -15,9 +15,14 @@ public class HorizontalSliderTests extends BaseTests {
         var sliderPage = homePage.navigateToHorizontalSlider();
 
         // When
-        sliderPage.moveSlider(Keys.ARROW_RIGHT, 6);
+        sliderPage.moveSlider(
+                Keys.ARROW_RIGHT,
+                6
+        );
 
         // Then
-        assertEquals(sliderPage.getSliderValue(), "3", "Slider value mismatch.");
+        assertEquals(sliderPage.getSliderValue(),
+                "3",
+                "Slider value mismatch.");
     }
 }

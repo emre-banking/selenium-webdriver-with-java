@@ -22,7 +22,9 @@ public class AlertTests extends BaseTests {
         alertsPage.acceptJavaScriptAlert();
 
         // Then
-        assertEquals(alertsPage.getAlertResultText(), "You successfully clicked an alert", "Alert result text mismatch.");
+        assertEquals(alertsPage.getAlertResultText(),
+                "You successfully clicked an alert",
+                "Alert result text mismatch.");
     }
 
     @Test
@@ -36,7 +38,9 @@ public class AlertTests extends BaseTests {
         alertsPage.dismissJavaScriptAlert();
 
         // Then
-        assertEquals(text, "I am a JS Confirm", "Alert text mismatch.");
+        assertEquals(text,
+                "I am a JS Confirm",
+                "Alert text mismatch.");
     }
 
     @Test
@@ -50,6 +54,8 @@ public class AlertTests extends BaseTests {
         alertsPage.acceptJavaScriptAlert();
 
         // Then
-        assertEquals(alertsPage.getAlertResultText(), "You entered: " + inputText, "Prompt result text mismatch.");
+        assertEquals(alertsPage.getAlertResultText(),
+                "You entered: " + inputText,
+                "Prompt result text mismatch.");
     }
 }

@@ -21,7 +21,11 @@ public class DropdownTests extends BaseTests {
         var selectedOptions = dropdownPage.getSelectedOptions();
 
         // Then
-        assertEquals(selectedOptions.size(), 1, "Only one option should be selected.");
-        assertTrue(selectedOptions.contains(option), "Selected option mismatch.");
+        assertEquals(selectedOptions.size(),
+                1,
+                "Only one option should be selected.");
+
+        assertTrue(selectedOptions.contains(option),
+                "Selected option mismatch.");
     }
 }

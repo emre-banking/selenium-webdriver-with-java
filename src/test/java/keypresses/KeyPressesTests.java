@@ -19,6 +19,8 @@ public class KeyPressesTests extends BaseTests {
         keyPressesPage.enterText("A" + Keys.BACK_SPACE);
 
         // Then
-        assertEquals(keyPressesPage.getResult(), "You entered: BACK_SPACE", "Backspace key press result mismatch.");
+        assertEquals(keyPressesPage.getResult(),
+                "You entered: BACK_SPACE",
+                "Backspace key press result mismatch.");
     }
 }

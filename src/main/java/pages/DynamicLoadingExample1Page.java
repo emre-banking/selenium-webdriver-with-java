@@ -19,7 +19,6 @@ public class DynamicLoadingExample1Page extends BasePage {
         super(driver);
     }
 
-    // Clicks the Start button and waits for the loading indicator to disappear.
     public void clickStartButtonAndWait() {
         Allure.step("Click Start button and wait for loading to finish", () -> {
             wait.until(ExpectedConditions.elementToBeClickable(startButton)).click();

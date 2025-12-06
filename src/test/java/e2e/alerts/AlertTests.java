@@ -12,6 +12,8 @@ import static org.testng.Assert.*;
 public class AlertTests extends BaseTests {
 
     Faker faker = new Faker();
+    String alertText = "You successfully clicked an alert";
+    String alertResultText = "I am a JS Confirm";
     String inputText = faker.lorem().sentence();
 
     @Test
@@ -24,9 +26,7 @@ public class AlertTests extends BaseTests {
         alertsPage.acceptJavaScriptAlert();
 
         // Then
-        assertEquals(alertsPage.getAlertResultText(),
-                "You successfully clicked an alert",
-                "Alert result text mismatch.");
+        alertsPage.verifyResultText(alertText);
     }
 
     @Test
@@ -56,8 +56,6 @@ public class AlertTests extends BaseTests {
         alertsPage.acceptJavaScriptAlert();
 
         // Then
-        assertEquals(alertsPage.getAlertResultText(),
-                "You entered: " + inputText,
-                "Prompt result text mismatch.");
+        alertsPage.verifyResultText("You entered: " + inputText);
     }
 }

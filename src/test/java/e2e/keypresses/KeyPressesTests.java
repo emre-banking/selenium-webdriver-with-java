@@ -7,8 +7,6 @@ import org.openqa.selenium.Keys;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-
 @Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class KeyPressesTests extends BaseTests {
 
@@ -21,8 +19,6 @@ public class KeyPressesTests extends BaseTests {
         keyPressesPage.enterText("A" + Keys.BACK_SPACE);
 
         // Then
-        assertEquals(keyPressesPage.getResult(),
-                "You entered: BACK_SPACE",
-                "Backspace key press result mismatch.");
+        keyPressesPage.assertKeyPressResult("You entered: BACK_SPACE");
     }
 }

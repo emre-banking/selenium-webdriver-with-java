@@ -2,10 +2,12 @@
 
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 public class DynamicLoadingExample1Page extends BasePage {
 
@@ -18,13 +20,25 @@ public class DynamicLoadingExample1Page extends BasePage {
     }
 
     // Clicks the Start button and waits for the loading indicator to disappear.
-    public void clickStartButtonAndWait(){
-        wait.until(ExpectedConditions.elementToBeClickable(startButton)).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIndicator));
+    public void clickStartButtonAndWait() {
+        Allure.step("Click Start button and wait for loading to finish", () -> {
+            wait.until(ExpectedConditions.elementToBeClickable(startButton)).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIndicator));
+        });
+    }
+
+    public void assertLoadedText(String expectedText) {
+        Allure.step("Verify loaded text equals expected value", () ->
+                Assert.assertEquals(
+                        getLoadedText(),
+                        expectedText,
+                        "Loaded text mismatch."
+                )
+        );
     }
 
     // Retrieves the text of the finish element.
-    public String getLoadedText() {
+    private String getLoadedText() {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(finishText));
         return element.getText().trim();
     }

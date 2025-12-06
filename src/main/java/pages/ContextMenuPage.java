@@ -21,9 +21,7 @@ public class ContextMenuPage extends BasePage {
 
     // Performs a context click on the specified target element.
     public void openContextMenu() {
-        Allure.step("Open context menu page", () -> {
-            actions.contextClick(getHotSpot()).perform();
-        });
+        Allure.step("Open context menu page", () -> actions.contextClick(getHotSpot()).perform());
     }
 
     // Retrieves the text displayed in the alert dialog.

@@ -23,10 +23,8 @@ public class ClickTests extends BaseTests {
         contextMenuPage.openContextMenu();
 
         // Then
-        Allure.step("Verify alert text is correct", () -> {
-            assertEquals(contextMenuPage.getAlertText(),
-                    expectedAlertText,
-                    "Alert text should match expected message");
-        });
+        Allure.step("Verify alert text is correct", () -> assertEquals(contextMenuPage.getAlertText(),
+                expectedAlertText,
+                "Alert text should match expected message"));
     }
 }

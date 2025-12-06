@@ -9,8 +9,6 @@ import pages.LoginPage;
 import pages.SecureAreaPage;
 import e2e.utils.ConfigReader;
 
-import static org.testng.Assert.assertTrue;
-
 @Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class LoginTests extends BaseTests {
 
@@ -26,7 +24,7 @@ public class LoginTests extends BaseTests {
         );
 
         // Then
-        String actualResult = secureAreaPage.getAlertText();
-        assertTrue(actualResult.contains("You logged into a secure area!"), "Login failed.");
+        String loginMessage = secureAreaPage.getAlertText();
+        loginPage.assertLoginSuccess(loginMessage);
     }
 }

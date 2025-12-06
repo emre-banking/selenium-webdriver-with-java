@@ -2,9 +2,11 @@
 
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 public class LoginPage extends BasePage{
 
@@ -16,10 +18,21 @@ public class LoginPage extends BasePage{
         super(driver);
     }
 
-    public SecureAreaPage login(String username, String password){
-        enterUsername(username);
-        enterPassword(password);
-        return clickLoginButton();
+    public SecureAreaPage login(String username, String password) {
+        return Allure.step("Login with username: " + username, () -> {
+            enterUsername(username);
+            enterPassword(password);
+            return clickLoginButton();
+        });
+    }
+
+    public void assertLoginSuccess(String actualText) {
+        Allure.step("Verify login success message is displayed", () ->
+                Assert.assertTrue(
+                        actualText.contains("You logged into a secure area!"),
+                        "Login failed."
+                )
+        );
     }
 
     private void enterUsername(String username){

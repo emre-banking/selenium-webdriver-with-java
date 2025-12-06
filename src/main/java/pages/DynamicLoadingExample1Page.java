@@ -1,36 +1,44 @@
-// This class represents the Dynamic Loading Example 1 Page of the application.
-// It provides methods to interact with the page elements and retrieve information.
-// The constructor takes a WebDriver instance to interact with the browser.
+// This class provides methods to interact with the page elements and retrieve information.
 
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
-import java.time.Duration;
+public class DynamicLoadingExample1Page extends BasePage {
 
-public class DynamicLoadingExample1Page {
-
-    private WebDriver driver;
-    private By startButton = By.xpath("//button[.='Start']");
-    private By finishText = By.id("finish");
-    private By loadingIndicator = By.id("loading");
+    private final By startButton = By.xpath("//button[.='Start']");
+    private final By finishText = By.id("finish");
+    private final By loadingIndicator = By.id("loading");
 
     public DynamicLoadingExample1Page(WebDriver driver){
-        this.driver=driver;
+        super(driver);
     }
 
-    // Clicks the Start button and waits for the loading indicator to disappear.
-    public void clickStartButton(){
-        driver.findElement(startButton).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(loadingIndicator)));
+    public void clickStartButtonAndWait() {
+        Allure.step("Click Start button and wait for loading to finish", () -> {
+            wait.until(ExpectedConditions.elementToBeClickable(startButton)).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIndicator));
+        });
+    }
+
+    public void assertLoadedText(String expectedText) {
+        Allure.step("Verify loaded text equals expected value", () ->
+                Assert.assertEquals(
+                        getLoadedText(),
+                        expectedText,
+                        "Loaded text mismatch."
+                )
+        );
     }
 
     // Retrieves the text of the finish element.
-    public String getFinishText(){
-        return driver.findElement(finishText).getText();
+    private String getLoadedText() {
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(finishText));
+        return element.getText().trim();
     }
 }

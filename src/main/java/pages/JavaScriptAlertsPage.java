@@ -1,60 +1,83 @@
-// This class represents the JavaScript Alerts Page of the application.
-// It provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
+// This class provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
 
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
-public class JavaScriptAlertsPage {
+public class JavaScriptAlertsPage extends BasePage {
 
-    private WebDriver driver;
-    private By alertButton = By.xpath("//button[.='Click for JS Alert']");
-    private By confirmButton = By.xpath("//button[.='Click for JS Confirm']");
-    private By promptButton = By.xpath("//button[.='Click for JS Prompt']");
-    private By result = By.id("result");
+    private final By alertButton = By.xpath("//button[.='Click for JS Alert']");
+    private final By confirmButton = By.xpath("//button[.='Click for JS Confirm']");
+    private final By promptButton = By.xpath("//button[.='Click for JS Prompt']");
+    private final By result = By.id("result");
 
-    public JavaScriptAlertsPage(WebDriver driver){
-        this.driver=driver;
+    public JavaScriptAlertsPage(WebDriver driver) {
+        super(driver);
+    }
+
+    public void verifyResultText(String expectedText) {
+        Allure.step("Verify alert text", () ->
+                Assert.assertEquals(
+                        getAlertResultText(),
+                        expectedText,
+                        "Result text mismatch."
+                )
+        );
     }
 
     // Clicks the "Click for JS Alert" button
-    public void clickAlertButton(){
-        driver.findElement(alertButton).click();
+    public void clickAlertButton() {
+        Allure.step("Click JS Alert button", () ->
+                wait.until(ExpectedConditions.elementToBeClickable(alertButton)).click()
+        );
     }
 
     // Clicks the "Click for JS Confirm" button
-    public void clickConfirmButton(){
-        driver.findElement(confirmButton).click();
+    public void clickConfirmButton() {
+        Allure.step("Click JS Confirm button", () ->
+                wait.until(ExpectedConditions.elementToBeClickable(confirmButton)).click()
+        );
     }
 
     // Clicks the "Click for JS Prompt" button
-    public void clickPromptButton(){
-        driver.findElement(promptButton).click();
+    public void clickPromptButton() {
+        Allure.step("Click JS Prompt button", () ->
+                wait.until(ExpectedConditions.elementToBeClickable(promptButton)).click()
+        );
     }
 
     // Accepts the JavaScript alert
-    public void alert_clickToAccept(){
-        driver.switchTo().alert().accept();
+    public void acceptJavaScriptAlert() {
+        Allure.step("Accept JavaScript alert", () ->
+                wait.until(ExpectedConditions.alertIsPresent()).accept()
+        );
     }
 
     // Dismisses the JavaScript alert
-    public void alert_clickToDismiss(){
-        driver.switchTo().alert().dismiss();
+    public void dismissJavaScriptAlert() {
+        Allure.step("Dismiss JavaScript alert", () ->
+                wait.until(ExpectedConditions.alertIsPresent()).dismiss()
+        );
     }
 
     // Returns the text of the JavaScript alert
-    public String alert_getText(){
-        return driver.switchTo().alert().getText();
-    }
-
-    // Returns the text of the result element on the page
-    public String alert_getResult(){
-        return driver.findElement(result).getText();
+    public String getAlertText() {
+        return wait.until(ExpectedConditions.alertIsPresent()).getText();
     }
 
     // Sets the input text in the JavaScript prompt
-    public void alert_setInput(String text){
-        driver.switchTo().alert().sendKeys(text);
+    public void setAlertInputText(String inputText) {
+        Allure.step("Set alert input text: " + inputText, () ->
+                wait.until(ExpectedConditions.alertIsPresent()).sendKeys(inputText)
+        );
+    }
+
+    // Returns the text of the result element on the page
+    private String getAlertResultText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(result)).getText().trim();
     }
 }

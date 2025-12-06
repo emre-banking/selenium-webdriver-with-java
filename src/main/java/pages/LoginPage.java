@@ -1,35 +1,50 @@
-// This class represents the Login Page of the application.
-// It provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
+// This class provides a constructor to initialize the WebDriver instance and contains methods to interact with the page.
 
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
-public class LoginPage {
+public class LoginPage extends BasePage{
 
-    private WebDriver driver;
-    private By usernameField = By.id("username");
-    private By passwordField = By.id("password");
-    private By loginButton = By.xpath("//button[@class='radius']");
+    private final By usernameField = By.id("username");
+    private final By passwordField = By.id("password");
+    private final By loginButton = By.xpath("//button[@class='radius']");
 
     public LoginPage(WebDriver driver){
-        this.driver=driver;
+        super(driver);
     }
 
-    // Enters the given username in the username field
-    public void enterUsername(String username){
-        driver.findElement(usernameField).sendKeys(username);
+    public SecureAreaPage login(String username, String password) {
+        return Allure.step("Login with username: " + username, () -> {
+            enterUsername(username);
+            enterPassword(password);
+            return clickLoginButton();
+        });
     }
 
-    // Enters the given password in the password field
-    public void enterPassword(String password){
-        driver.findElement(passwordField).sendKeys(password);
+    public void assertLoginSuccess(String actualText) {
+        Allure.step("Verify login success message is displayed", () ->
+                Assert.assertTrue(
+                        actualText.contains("You logged into a secure area!"),
+                        "Login failed."
+                )
+        );
     }
 
-    // Clicks the login button and returns a new instance of the SecureAreaPage
-    public SecureAreaPage clickLoginButton(){
-        driver.findElement(loginButton).click();
+    private void enterUsername(String username){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField)).sendKeys(username);
+    }
+
+    private void enterPassword(String password){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField)).sendKeys(password);
+    }
+
+    private SecureAreaPage clickLoginButton(){
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
         return new SecureAreaPage(driver);
     }
 }

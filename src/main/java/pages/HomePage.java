@@ -1,75 +1,66 @@
-// This class represents the Home Page of the application.
-// It provides methods to navigate to different pages and return the respective Page objects.
-// The constructor takes a WebDriver instance to interact with the browser.
-
 package pages;
 
-import org.openqa.selenium.By;
+import constants.HomeLinks;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.WebDriver;
 
-public class HomePage {
-    private WebDriver driver;
+public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver){
-        this.driver=driver;
+        super(driver);
     }
 
-    // Clicks on the "Context Menu" link and returns the ContextMenuPage object.
-    public ContextMenuPage clickContextMenu(){
-        clickLink("Context Menu");
-        return new ContextMenuPage(driver);
+    public ContextMenuPage navigateToContextMenu() {
+        return Allure.step("Navigate to Context Menu page",
+                () -> navigateTo(HomeLinks.CONTEXT_MENU, ContextMenuPage.class)
+        );
     }
 
-    // Clicks on the "Dropdown" link and returns the DropdownPage object.
-    public DropdownPage clickDropdown(){
-        clickLink("Dropdown");
-        return new DropdownPage(driver);
+    public DropdownPage navigateToDropdown() {
+        return Allure.step("Navigate to Dropdown page",
+                () -> navigateTo(HomeLinks.DROPDOWN, DropdownPage.class)
+        );
     }
 
-    // Clicks on the "Dynamic Loading" link and returns the DynamicLoadingPage object.
-    public DynamicLoadingPage clickDynamicLoading(){
-        clickLink("Dynamic Loading");
-        return new DynamicLoadingPage(driver);
+    public DynamicLoadingPage navigateToDynamicLoading() {
+        return Allure.step("Navigate to Dynamic Loading page",
+                () -> navigateTo(HomeLinks.DYNAMIC_LOADING, DynamicLoadingPage.class)
+        );
     }
 
-    // Clicks on the "Horizontal Slider" link and returns the HorizontalSliderPage object.
-    public HorizontalSliderPage clickHorizontalSlider(){
-        clickLink("Horizontal Slider");
-        return new HorizontalSliderPage(driver);
+    public HorizontalSliderPage navigateToHorizontalSlider() {
+        return Allure.step("Navigate to Horizontal Slider page",
+                () -> navigateTo(HomeLinks.HORIZONTAL_SLIDER, HorizontalSliderPage.class)
+        );
     }
 
-    // Clicks on the "Hovers" link and returns the HoversPage object.
-    public HoversPage clickHovers(){
-        clickLink("Hovers");
-        return new HoversPage(driver);
+    public HoversPage navigateToHovers() {
+        return Allure.step("Navigate to Hovers page",
+                () -> navigateTo(HomeLinks.HOVERS, HoversPage.class)
+        );
     }
 
-    // Clicks on the "JavaScript Alerts" link and returns the JavaScriptAlertsPage object.
-    public JavaScriptAlertsPage clickJavaScriptAlerts(){
-        clickLink("JavaScript Alerts");
-        return new JavaScriptAlertsPage(driver);
+    public JavaScriptAlertsPage navigateToJavaScriptAlerts() {
+        return Allure.step("Navigate to JavaScript Alerts page",
+                () -> navigateTo(HomeLinks.JAVASCRIPT_ALERTS, JavaScriptAlertsPage.class)
+        );
     }
 
-    // Clicks on the "Key Presses" link and returns the KeyPressesPage object.
-    public KeyPressesPage clickKeyPresses(){
-        clickLink("Key Presses");
-        return new KeyPressesPage(driver);
+    public KeyPressesPage navigateToKeyPresses() {
+        return Allure.step("Navigate to Key Presses page",
+                () -> navigateTo(HomeLinks.KEY_PRESSES, KeyPressesPage.class)
+        );
     }
 
-    // Clicks on the "Form Authentication" link and returns the LoginPage object.
-    public LoginPage clickFormAuthentication(){
-        clickLink("Form Authentication");
-        return new LoginPage(driver);
+    public LoginPage navigateToFormAuthentication() {
+        return Allure.step("Navigate to Form Authentication page",
+                () -> navigateTo(HomeLinks.FORM_AUTHENTICATION, LoginPage.class)
+        );
     }
 
-    // Clicks on the "WYSIWYG Editor" link and returns the WYSIWYGEditorPage object.
-    public WYSIWYGEditorPage clickWYSIWYGEditor(){
-        clickLink("WYSIWYG Editor");
-        return new WYSIWYGEditorPage(driver);
-    }
-
-    // Private helper method to click on a link by its link text.
-    private void clickLink(String linkText){
-        driver.findElement(By.linkText(linkText)).click();
+    public WYSIWYGEditorPage navigateToWYSIWYGEditor() {
+        return Allure.step("Navigate to WYSIWYG Editor page",
+                () -> navigateTo(HomeLinks.WYSIWYG_EDITOR, WYSIWYGEditorPage.class)
+        );
     }
 }

@@ -1,41 +1,68 @@
-// This class represents the Dropdown Page of the application.
-// It provides methods to interact with the dropdown list.
-// The constructor takes a WebDriver instance to interact with the browser.
+// This class provides methods to interact with the dropdown list.
 
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DropdownPage {
-    private WebDriver driver;
-    private By dropdownList = By.id("dropdown");
+public class DropdownPage extends BasePage {
+    private final By dropdownList = By.id("dropdown");
 
     public DropdownPage(WebDriver driver){
-        this.driver=driver;
+        super(driver);
     }
 
-    // Selects the specified option from the dropdown list.
-    public void selectFromDropdown(String option){
-        findDropdownElement().selectByVisibleText(option);
+    public void selectFromDropdown(String option) {
+        Allure.step("Select option from dropdown: " + option, () -> {
+            Select dropdown = findDropdownElement();
+            boolean exists = dropdown.getOptions().stream()
+                    .anyMatch(o -> o.getText().equals(option));
+            if (!exists) {
+                throw new IllegalArgumentException("Dropdown option not found: " + option);
+            }
+            dropdown.selectByVisibleText(option);
+        });
     }
 
     // Returns a list of selected options from the dropdown list.
-    public List<String> getSelectedOptions(){
-        List<WebElement> selectedElements =
-                findDropdownElement().getAllSelectedOptions();
-        return selectedElements.stream().map(e->e.getText()).collect(Collectors.toList());
+    public List<String> getSelectedOptions() {
+        return findDropdownElement()
+                .getAllSelectedOptions()
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
     }
 
     // Finds and returns the dropdown element as a Select object.
-    private Select findDropdownElement(){
-        return new Select(driver.findElement(dropdownList));
+    private Select findDropdownElement() {
+        WebElement element = driver.findElement(dropdownList);
+        return new Select(element);
     }
 
+    public void assertOnlyOneOptionSelected(List<String> selectedOptions) {
+        Allure.step("Verify only one option is selected", () ->
+                Assert.assertEquals(
+                        selectedOptions.size(),
+                        1,
+                        "Only one option should be selected."
+                )
+        );
+    }
 
-}
+    public void assertOptionIsSelected(List<String> selectedOptions, String expectedOption) {
+        Allure.step("Verify selected option is correct", () ->
+                Assert.assertTrue(
+                        selectedOptions.contains(expectedOption),
+                        "Selected option mismatch."
+                )
+        );
+    }
+
+} 

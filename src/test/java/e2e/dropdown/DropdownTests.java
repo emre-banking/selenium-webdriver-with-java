@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 
 @Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class DropdownTests extends BaseTests {
+    final String option = java.util.List.of("Option 1", "Option 2")
+            .get(new java.util.Random().nextInt(2));
 
     @Test
     public void verifyDropdownOptionSelection(){
@@ -15,7 +17,6 @@ public class DropdownTests extends BaseTests {
         var dropdownPage = homePage.navigateToDropdown();
 
         // When
-        final String option = "Option 1";
         dropdownPage.selectFromDropdown(option);
         var selectedOptions = dropdownPage.getSelectedOptions();
 

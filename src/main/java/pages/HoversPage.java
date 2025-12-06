@@ -18,7 +18,6 @@ public class HoversPage extends BasePage{
         super(driver);
     }
 
-    // Performs a hover action on the specified figure element
     public FigureCaption hoverOverFigure(int index) {
         return Allure.step("Hover over figure at index: " + index, () -> {
             WebElement figure = wait

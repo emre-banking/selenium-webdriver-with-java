@@ -66,9 +66,7 @@ public class JavaScriptAlertsPage extends BasePage {
 
     // Returns the text of the JavaScript alert
     public String getAlertText() {
-        return Allure.step("Get alert text", () ->
-                wait.until(ExpectedConditions.alertIsPresent()).getText()
-        );
+        return wait.until(ExpectedConditions.alertIsPresent()).getText();
     }
 
     // Sets the input text in the JavaScript prompt

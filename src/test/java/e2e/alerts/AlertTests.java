@@ -3,6 +3,8 @@
 package e2e.alerts;
 
 import e2e.base.BaseTests;
+import io.qameta.allure.Allure;
+import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.github.javafaker.Faker;
@@ -39,9 +41,11 @@ public class AlertTests extends BaseTests {
         alertsPage.dismissJavaScriptAlert();
 
         // Then
-        assertEquals(text,
-                "I am a JS Confirm",
-                "Alert text mismatch.");
+        Allure.step("Verify dismissed alert text", () ->
+                assertEquals(text,
+                        "I am a JS Confirm",
+                        "Alert text mismatch.")
+        );
     }
 
     @Test

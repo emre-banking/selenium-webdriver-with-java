@@ -19,7 +19,6 @@ public class ContextMenuPage extends BasePage {
         this.actions = new Actions(driver);
     }
 
-    // Performs a context click on the specified target element.
     public void openContextMenu() {
         Allure.step("Open context menu page",
                 () -> actions.contextClick(getHotSpot()).perform()

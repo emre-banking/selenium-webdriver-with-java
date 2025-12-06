@@ -19,7 +19,6 @@ public class DropdownPage extends BasePage {
         super(driver);
     }
 
-    // Selects the specified option from the dropdown list.
     public void selectFromDropdown(String option) {
         Allure.step("Select option from dropdown: " + option, () -> {
             Select dropdown = findDropdownElement();

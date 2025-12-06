@@ -3,6 +3,7 @@
 package e2e.actions;
 
 import e2e.base.BaseTests;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -22,9 +23,10 @@ public class ClickTests extends BaseTests {
         contextMenuPage.openContextMenu();
 
         // Then
-        assertEquals(contextMenuPage.getAlertText(),
-                expectedAlertText,
-                "Alert text should match expected message");
-        contextMenuPage.acceptAlert();
+        Allure.step("Verify alert text is correct", () -> {
+            assertEquals(contextMenuPage.getAlertText(),
+                    expectedAlertText,
+                    "Alert text should match expected message");
+        });
     }
 }

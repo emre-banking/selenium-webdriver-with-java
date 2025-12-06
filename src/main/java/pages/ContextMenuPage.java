@@ -2,6 +2,7 @@
 
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,17 +21,14 @@ public class ContextMenuPage extends BasePage {
 
     // Performs a context click on the specified target element.
     public void openContextMenu() {
-        actions.contextClick(getHotSpot()).perform();
+        Allure.step("Open context menu page", () -> {
+            actions.contextClick(getHotSpot()).perform();
+        });
     }
 
     // Retrieves the text displayed in the alert dialog.
     public String getAlertText() {
         return getAlert().getText();
-    }
-
-    // Accepts the alert dialog by clicking the "OK" button.
-    public void acceptAlert() {
-        getAlert().accept();
     }
 
     private WebElement getHotSpot() {

@@ -1,6 +1,7 @@
 package pages;
 
 import constants.HomeLinks;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.WebDriver;
 
 public class HomePage extends BasePage {
@@ -9,8 +10,10 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    public ContextMenuPage navigateToContextMenu(){
-        return navigateTo(HomeLinks.CONTEXT_MENU, ContextMenuPage.class);
+    public ContextMenuPage navigateToContextMenu() {
+        return Allure.step("Navigate to Context Menu page",
+                () -> navigateTo(HomeLinks.CONTEXT_MENU, ContextMenuPage.class)
+        );
     }
 
     public DropdownPage navigateToDropdown(){

@@ -21,12 +21,19 @@ public class ContextMenuPage extends BasePage {
 
     // Performs a context click on the specified target element.
     public void openContextMenu() {
-        Allure.step("Open context menu page", () -> actions.contextClick(getHotSpot()).perform());
+        Allure.step("Open context menu page",
+                () -> actions.contextClick(getHotSpot()).perform()
+        );
     }
 
-    // Retrieves the text displayed in the alert dialog.
-    public String getAlertText() {
-        return getAlert().getText();
+    public void verifyAlertText(String expectedText) {
+        Allure.step("Verify alert text is correct", () ->
+                org.testng.Assert.assertEquals(
+                        getAlertText(),
+                        expectedText,
+                        "Alert message mismatch"
+                )
+        );
     }
 
     private WebElement getHotSpot() {
@@ -36,4 +43,9 @@ public class ContextMenuPage extends BasePage {
     private Alert getAlert() {
         return driver.switchTo().alert();
     }
+
+    private String getAlertText() {
+        return getAlert().getText();
+    }
 }
+

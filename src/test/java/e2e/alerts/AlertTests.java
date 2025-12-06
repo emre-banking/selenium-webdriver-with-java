@@ -4,7 +4,6 @@ package e2e.alerts;
 
 import e2e.base.BaseTests;
 import io.qameta.allure.Allure;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.github.javafaker.Faker;

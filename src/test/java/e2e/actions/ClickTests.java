@@ -3,6 +3,7 @@
 package e2e.actions;
 
 import e2e.base.BaseTests;
+import io.qameta.allure.Description;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
@@ -11,6 +12,7 @@ import static org.testng.Assert.assertEquals;
 public class ClickTests extends BaseTests {
     private static final String expectedAlertText = "You selected a context menu";
 
+    @Description("Verify alert text after right-click context menu")
     @Test
     public void alertShouldShowCorrectMessageAfterRightClick() {
         // Given

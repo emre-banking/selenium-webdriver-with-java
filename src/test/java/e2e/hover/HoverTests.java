@@ -6,8 +6,6 @@ import e2e.base.BaseTests;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 @Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class HoverTests extends BaseTests {
 
@@ -20,18 +18,6 @@ public class HoverTests extends BaseTests {
         var caption = hoversPage.hoverOverFigure(1);
 
         // Then
-        assertTrue(caption.isCaptionDisplayed(),
-                "Caption is not displayed.");
-
-        assertEquals(caption.getTitle(),
-                "name: user1",
-                "Caption title mismatch.");
-
-        assertEquals(caption.getLinkText(),
-                "View profile",
-                "Caption link text mismatch.");
-
-        assertTrue(caption.getLink().endsWith("/users/1"),
-                "Caption link URL is incorrect.");
+        caption.assertCaption("name: user1", "View profile", "/users/1");
     }
 }

@@ -2,11 +2,13 @@
 
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 public class HoversPage extends BasePage{
     private final By figureBox = By.className("figure");
@@ -17,10 +19,14 @@ public class HoversPage extends BasePage{
     }
 
     // Performs a hover action on the specified figure element
-    public FigureCaption hoverOverFigure(int index){
-        WebElement figure = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(figureBox)).get(index - 1);
-        new Actions(driver).moveToElement(figure).perform();
-        return new FigureCaption(figure.findElement(boxCaption));
+    public FigureCaption hoverOverFigure(int index) {
+        return Allure.step("Hover over figure at index: " + index, () -> {
+            WebElement figure = wait
+                    .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(figureBox))
+                    .get(index - 1);
+            new Actions(driver).moveToElement(figure).perform();
+            return new FigureCaption(figure.findElement(boxCaption));
+        });
     }
 
     public class FigureCaption {
@@ -32,24 +38,47 @@ public class HoversPage extends BasePage{
             this.caption = caption;
         }
 
+        public void assertCaption(String expectedTitle, String expectedLinkText, String expectedLinkEnding) {
+            Allure.step("Verify figure caption details", () -> {
+                Assert.assertTrue(
+                        isCaptionDisplayed(),
+                        "Caption is not displayed."
+                );
+                Assert.assertEquals(
+                        getTitle(),
+                        expectedTitle,
+                        "Caption title mismatch."
+                );
+                Assert.assertEquals(
+                        getLinkText(),
+                        expectedLinkText,
+                        "Caption link text mismatch."
+                );
+                Assert.assertTrue(
+                        getLink().endsWith(expectedLinkEnding),
+                        "Caption link URL is incorrect."
+                );
+            });
+        }
+
         // Checks if the caption is displayed
-        public boolean isCaptionDisplayed(){
+        private boolean isCaptionDisplayed(){
             return caption.isDisplayed();
         }
 
         // Returns the text of the header element within the caption
-        public String getTitle(){
+        private String getTitle(){
             wait.until(ExpectedConditions.visibilityOf(caption));
             return caption.findElement(header).getText().trim();
         }
 
         // Returns the href attribute value of the link element within the caption
-        public String getLink(){
+        private String getLink(){
             return caption.findElement(link).getAttribute("href");
         }
 
         // Returns the text of the link element within the caption
-        public String getLinkText(){
+        private String getLinkText(){
             return caption.findElement(link).getText().trim();
         }
     }

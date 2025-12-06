@@ -16,27 +16,36 @@
     </properties>
 
     <dependencies>
+        <!-- Selenium WebDriver:
+             Core library used for browser automation -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>4.14.0</version>
         </dependency>
+        <!-- TestNG:
+             Testing framework used to run tests, define assertions, and structure test suites -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.10.2</version>
         </dependency>
+        <!-- JavaFaker:
+             Utility library for generating fake test data such as names, emails, addresses -->
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <!-- Allure TestNG integration:
+             Provides Allure reporting support for TestNG test executions -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
             <version>2.27.0</version>
         </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

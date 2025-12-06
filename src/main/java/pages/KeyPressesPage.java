@@ -18,10 +18,9 @@ public class KeyPressesPage extends BasePage {
     }
 
     public void enterText(String text) {
-        Allure.step("Enter text into the field", () -> {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(textField))
-                    .sendKeys(text);
-        });
+        Allure.step("Enter text into the field", () ->
+                wait.until(ExpectedConditions.visibilityOfElementLocated(textField))
+                .sendKeys(text));
     }
 
     public void assertKeyPressResult(String expectedResult) {

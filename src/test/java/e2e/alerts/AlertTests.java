@@ -1,8 +1,8 @@
 // This class contains test cases that verify the functionality of alerts on the JavaScript Alerts page.
 
-package alerts;
+package e2e.alerts;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.github.javafaker.Faker;

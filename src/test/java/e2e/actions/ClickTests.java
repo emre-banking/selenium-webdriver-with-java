@@ -1,8 +1,8 @@
 // This class contains a test case that verifies the functionality of context clicking on the context menu page.
 
-package actions;
+package e2e.actions;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;

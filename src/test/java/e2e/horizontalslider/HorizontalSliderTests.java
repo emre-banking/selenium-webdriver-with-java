@@ -1,8 +1,8 @@
 // This class contains a test case that verifies the functionality of a horizontal slider.
 
-package horizontalslider;
+package e2e.horizontalslider;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;

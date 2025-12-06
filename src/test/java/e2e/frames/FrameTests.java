@@ -1,8 +1,8 @@
 // This class contains a test case that verifies the functionality of a text editor within a frame.
 
-package frames;
+package e2e.frames;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 

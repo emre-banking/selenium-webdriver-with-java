@@ -1,8 +1,8 @@
 // This class contains a test case that verifies the hover functionality on a user figure.
 
-package hover;
+package e2e.hover;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 

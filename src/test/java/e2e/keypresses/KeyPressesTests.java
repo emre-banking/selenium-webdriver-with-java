@@ -1,8 +1,8 @@
 // This package contains test cases for testing key presses functionality.
 
-package keypresses;
+package e2e.keypresses;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;

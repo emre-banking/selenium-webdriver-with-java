@@ -1,8 +1,8 @@
 // This package contains a test case for testing the wait functionality.
 
-package wait;
+package e2e.wait;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;

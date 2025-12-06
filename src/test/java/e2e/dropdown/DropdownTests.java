@@ -1,8 +1,8 @@
 // This class contains a test case that verifies the functionality of selecting an option from a dropdown menu.
 
-package dropdown;
+package e2e.dropdown;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;

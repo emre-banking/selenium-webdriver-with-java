@@ -1,13 +1,13 @@
 // This package contains a test case for testing the login functionality.
 
-package login;
+package e2e.login;
 
-import base.BaseTests;
+import e2e.base.BaseTests;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.SecureAreaPage;
-import utils.ConfigReader;
+import e2e.utils.ConfigReader;
 
 import static org.testng.Assert.assertTrue;
 

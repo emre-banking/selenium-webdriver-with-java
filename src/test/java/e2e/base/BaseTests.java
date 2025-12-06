@@ -1,7 +1,7 @@
 // This class serves as the base class for all test classes in the test automation framework.
 // It initializes the WebDriver instance, sets up the ChromeDriver using the driver in the project, and defines common setup and teardown methods.
 
-package base;
+package e2e.base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import pages.HomePage;
-import utils.ConfigReader;
+import e2e.utils.ConfigReader;
 
 @Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class BaseTests {

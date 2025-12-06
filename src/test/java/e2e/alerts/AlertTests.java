@@ -13,7 +13,6 @@ public class AlertTests extends BaseTests {
 
     Faker faker = new Faker();
     String alertText = "You successfully clicked an alert";
-    String alertResultText = "I am a JS Confirm";
     String inputText = faker.lorem().sentence();
 
     @Test

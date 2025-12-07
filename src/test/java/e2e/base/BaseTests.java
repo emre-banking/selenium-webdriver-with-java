@@ -14,7 +14,7 @@ import e2e.utils.ConfigReader;
 
 @Listeners({
         io.qameta.allure.testng.AllureTestNg.class,
-        AllureListener.class
+        // AllureListener.class
 })
 public class BaseTests {
     protected WebDriver driver;

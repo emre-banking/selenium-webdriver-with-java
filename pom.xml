@@ -13,7 +13,22 @@
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <allure.version>2.27.0</allure.version>
+        <aspectj.version>1.9.7</aspectj.version>
     </properties>
+
+    <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-bom</artifactId>
+                <version>${allure.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- Selenium WebDriver:
@@ -44,8 +59,12 @@
             <artifactId>allure-testng</artifactId>
             <version>2.27.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -54,6 +73,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <argLine>
+                        -javaagent:"${user.home}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>

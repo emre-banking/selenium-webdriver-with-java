@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.util.Objects;
+
 public class DynamicLoadingExample1Page extends BasePage {
 
     private final By startButton = By.xpath("//button[.='Start']");
@@ -21,7 +23,7 @@ public class DynamicLoadingExample1Page extends BasePage {
 
     public void clickStartButtonAndWait() {
         Allure.step("Click Start button and wait for loading to finish", () -> {
-            wait.until(ExpectedConditions.elementToBeClickable(startButton)).click();
+            Objects.requireNonNull(wait.until(ExpectedConditions.elementToBeClickable(startButton))).click();
             wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIndicator));
         });
     }
@@ -39,6 +41,7 @@ public class DynamicLoadingExample1Page extends BasePage {
     // Retrieves the text of the finish element.
     private String getLoadedText() {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(finishText));
+        assert element != null;
         return element.getText().trim();
     }
 }

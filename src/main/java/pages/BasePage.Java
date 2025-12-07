@@ -22,6 +22,7 @@ public class BasePage {
     protected void clickLink(String linkText){
         By locator = By.xpath("//a[normalize-space()='" + linkText + "']");
         WebElement link = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        assert link != null;
         link.click();
     }
 

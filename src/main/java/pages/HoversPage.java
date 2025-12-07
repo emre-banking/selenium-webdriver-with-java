@@ -10,6 +10,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.util.Objects;
+
 public class HoversPage extends BasePage{
     private final By figureBox = By.className("figure");
     private final By boxCaption = By.className("figcaption");
@@ -20,8 +22,8 @@ public class HoversPage extends BasePage{
 
     public FigureCaption hoverOverFigure(int index) {
         return Allure.step("Hover over figure at index: " + index, () -> {
-            WebElement figure = wait
-                    .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(figureBox))
+            WebElement figure = Objects.requireNonNull(wait
+                            .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(figureBox)))
                     .get(index - 1);
             new Actions(driver).moveToElement(figure).perform();
             return new FigureCaption(figure.findElement(boxCaption));

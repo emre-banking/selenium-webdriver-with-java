@@ -31,11 +31,6 @@ public class AllureListener implements ITestListener {
         return new byte[0];
     }
 
-    @Attachment(value = "{0}", type = "text/plain")
-    public static String saveTextLog(String message) {
-        return message;
-    }
-
     // --- Driver Extraction ---
     private WebDriver extractDriver(ITestResult result) {
         try {
@@ -46,7 +41,6 @@ public class AllureListener implements ITestListener {
                     .getSuperclass()          // BaseTests
                     .getDeclaredField("driver")
                     .get(testInstance);
-
         } catch (Exception e) {
             logger.error("Could not extract WebDriver via reflection.", e);
             return null;
@@ -78,9 +72,7 @@ public class AllureListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         String method = getTestMethodName(result);
         logger.error("Test failed: {}", method);
-
         WebDriver driver = extractDriver(result);
-
         if (driver != null) {
             try {
                 logger.info("Capturing screenshot for failed test: {}", method);
@@ -91,8 +83,6 @@ public class AllureListener implements ITestListener {
         } else {
             logger.error("Driver was null — screenshot could not be captured for {}", method);
         }
-
-        saveTextLog(method + " failed — screenshot captured.");
     }
 
     @Override

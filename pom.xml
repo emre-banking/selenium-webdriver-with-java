@@ -14,7 +14,7 @@
         <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <allure.version>2.27.0</allure.version>
-        <aspectj.version>1.9.7</aspectj.version>
+        <aspectj.version>1.9.21</aspectj.version>
     </properties>
 
     <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->

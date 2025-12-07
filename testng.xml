@@ -2,6 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="UI Test Suite" parallel="classes" thread-count="10">
+    <listeners>
+        <listener class-name="e2e.base.AllureListener"/>
+    </listeners>
     <test name="UI Tests">
         <classes>
             <class name="e2e.actions.ClickTests"/>

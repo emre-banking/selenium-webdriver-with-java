@@ -21,7 +21,14 @@ public class AllureListener implements ITestListener {
     // --- Allure Attachments ---
     @Attachment(value = "Failure Screenshot", type = "image/png")
     public byte[] saveFailureScreenShot(WebDriver driver) {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        try {
+            if (driver instanceof TakesScreenshot ts) {
+                return ts.getScreenshotAs(OutputType.BYTES);
+            }
+        } catch (RuntimeException e) {
+            logger.error("Screenshot could not be taken", e);
+        }
+        return new byte[0];
     }
 
     @Attachment(value = "{0}", type = "text/plain")

@@ -1,0 +1,100 @@
+package e2e.base;
+
+import io.qameta.allure.Attachment;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+
+public class AllureListener implements ITestListener {
+
+    private static final Logger logger = LoggerFactory.getLogger(AllureListener.class);
+
+    private static String getTestMethodName(ITestResult iTestResult) {
+        return iTestResult.getMethod().getConstructorOrMethod().getName();
+    }
+
+    // --- Allure Attachments ---
+    @Attachment(value = "Failure Screenshot", type = "image/png")
+    public byte[] saveFailureScreenShot(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Attachment(value = "{0}", type = "text/plain")
+    public static String saveTextLog(String message) {
+        return message;
+    }
+
+    // --- Driver Extraction ---
+    private WebDriver extractDriver(ITestResult result) {
+        try {
+            Object testInstance = result.getInstance();
+
+            return (WebDriver) testInstance
+                    .getClass()
+                    .getSuperclass()          // BaseTests
+                    .getDeclaredField("driver")
+                    .get(testInstance);
+
+        } catch (Exception e) {
+            logger.error("Could not extract WebDriver via reflection.", e);
+            return null;
+        }
+    }
+
+    // --- Listener Events ---
+    @Override
+    public void onStart(ITestContext context) {
+        logger.info("Test context started: {}", context.getName());
+    }
+
+    @Override
+    public void onFinish(ITestContext context) {
+        logger.info("Test context finished: {}", context.getName());
+    }
+
+    @Override
+    public void onTestStart(ITestResult result) {
+        logger.info("Test started: {}", getTestMethodName(result));
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        logger.info("Test succeeded: {}", getTestMethodName(result));
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        String method = getTestMethodName(result);
+        logger.error("Test failed: {}", method);
+
+        WebDriver driver = extractDriver(result);
+
+        if (driver != null) {
+            try {
+                logger.info("Capturing screenshot for failed test: {}", method);
+                saveFailureScreenShot(driver); // Allure attachment (same thread)
+            } catch (Throwable t) {
+                logger.error("Screenshot capture failed for test {}", method, t);
+            }
+        } else {
+            logger.error("Driver was null — screenshot could not be captured for {}", method);
+        }
+
+        saveTextLog(method + " failed — screenshot captured.");
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+        logger.warn("Test skipped: {}", getTestMethodName(result));
+    }
+
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+        logger.warn("Test partly failed but within success ratio: {}", getTestMethodName(result));
+    }
+}

@@ -12,7 +12,10 @@ import org.testng.annotations.Listeners;
 import pages.HomePage;
 import e2e.utils.ConfigReader;
 
-@Listeners({io.qameta.allure.testng.AllureTestNg.class})
+@Listeners({
+        io.qameta.allure.testng.AllureTestNg.class,
+        AllureListener.class
+})
 public class BaseTests {
     protected WebDriver driver;
     protected HomePage homePage;

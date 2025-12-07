@@ -19,7 +19,9 @@ public class LoginPage extends BasePage{
     }
 
     public SecureAreaPage login(String username, String password) {
-        return Allure.step("Login with username: " + username, () -> {
+        return Allure.step("Login with valid username and password", step -> {
+            step.parameter("Username", username);
+            step.parameter("Passsword", password);
             enterUsername(username);
             enterPassword(password);
             return clickLoginButton();

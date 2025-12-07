@@ -4,10 +4,8 @@ package e2e.horizontalslider;
 
 import e2e.base.BaseTests;
 import org.openqa.selenium.Keys;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class HorizontalSliderTests extends BaseTests {
 
     @Test

@@ -130,6 +130,12 @@ public class AllureListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         String method = getTestMethodName(result);
         logger.error("Test failed: {}", method);
+        String runnerMethod = result.getMethod().getConstructorOrMethod().getName();
+        if ("runScenario".equals(runnerMethod)) {
+            logger.info("Failure screenshot is attached by Cucumber @After hook.");
+            return;
+        }
+
         WebDriver driver = extractDriver(result);
         if (driver != null) {
             try {

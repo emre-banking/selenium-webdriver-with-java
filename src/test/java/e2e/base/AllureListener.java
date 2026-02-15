@@ -1,5 +1,6 @@
 package e2e.base;
 
+import e2e.cucumber.CucumberTestContext;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -70,18 +71,34 @@ public class AllureListener implements ITestListener {
 
     // --- Driver Extraction ---
     private WebDriver extractDriver(ITestResult result) {
+        String methodName = result.getMethod().getConstructorOrMethod().getName();
+        if ("runScenario".equals(methodName)) {
+            try {
+                return CucumberTestContext.getDriver();
+            } catch (Exception ignored) {
+                return null;
+            }
+        }
+
         try {
             Object testInstance = result.getInstance();
-
-            return (WebDriver) testInstance
-                    .getClass()
-                    .getSuperclass()          // BaseTests
-                    .getDeclaredField("driver")
-                    .get(testInstance);
+            Class<?> type = testInstance.getClass();
+            while (type != null) {
+                try {
+                    var field = type.getDeclaredField("driver");
+                    field.setAccessible(true);
+                    Object value = field.get(testInstance);
+                    if (value instanceof WebDriver webDriver) {
+                        return webDriver;
+                    }
+                } catch (NoSuchFieldException ignored) {
+                }
+                type = type.getSuperclass();
+            }
         } catch (Exception e) {
             logger.error("Could not extract WebDriver via reflection.", e);
-            return null;
         }
+        return null;
     }
 
     // --- Listener Events ---

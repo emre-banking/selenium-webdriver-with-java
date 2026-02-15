@@ -21,7 +21,7 @@ public class BaseTests {
     // Set up WebDriver and initialize the home page
     @BeforeClass
     public void setUp() {
-        baseUrl = ConfigReader.get("baseUrl");
+        baseUrl = ConfigReader.getRequired("baseUrl");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         homePage = new HomePage(driver);

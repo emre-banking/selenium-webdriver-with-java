@@ -26,4 +26,14 @@ public class ConfigReader {
     public static String get(String key) {
         return properties.getProperty(key);
     }
+
+    public static String getRequired(String key) {
+        String value = get(key);
+
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalStateException("Missing required configuration key: " + key);
+        }
+
+        return value;
+    }
 }

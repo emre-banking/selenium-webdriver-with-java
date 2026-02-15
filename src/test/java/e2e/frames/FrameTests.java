@@ -3,9 +3,13 @@
 package e2e.frames;
 
 import e2e.base.BaseTests;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 public class FrameTests extends BaseTests {
+
+    private static final Logger logger = LoggerFactory.getLogger(FrameTests.class);
 
     @Test
     public void verifyTextEditor(){
@@ -14,7 +18,7 @@ public class FrameTests extends BaseTests {
 
         // Temporary fallback for environments where the editor becomes read-only
         if (editorPage.isEditorReadOnly()) {
-            System.out.println("WYSIWYG editor is read-only in this run. Skipping text mutation assertions and marking test as passed.");
+            logger.info("WYSIWYG editor is read-only in this run. Skipping text mutation assertions and marking test as passed.");
             return;
         }
 

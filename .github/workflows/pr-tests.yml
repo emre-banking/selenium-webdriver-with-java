@@ -24,3 +24,19 @@ jobs:
 
       - name: Run tests
         run: mvn -B test
+
+      - name: Upload Surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-${{ github.run_number }}
+          path: target/surefire-reports/
+          if-no-files-found: warn
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ github.run_number }}
+          path: allure-results/
+          if-no-files-found: warn

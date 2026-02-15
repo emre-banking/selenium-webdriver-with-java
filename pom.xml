@@ -62,6 +62,13 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+           <!-- Allure Java commons:
+               Provides io.qameta.allure.Allure API used in page classes -->
+           <dependency>
+              <groupId>io.qameta.allure</groupId>
+              <artifactId>allure-java-commons</artifactId>
+              <version>${allure.version}</version>
+           </dependency>
         <!-- JavaFaker:
              Utility library for generating fake test data such as names, emails, addresses -->
         <dependency>

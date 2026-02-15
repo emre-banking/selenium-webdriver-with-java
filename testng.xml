@@ -9,7 +9,6 @@
         <classes>
             <class name="e2e.actions.ClickTests"/>
             <class name="e2e.alerts.AlertTests"/>
-            <class name="e2e.base.BaseTests"/>
             <class name="e2e.dropdown.DropdownTests"/>
             <class name="e2e.frames.FrameTests"/>
             <class name="e2e.horizontalslider.HorizontalSliderTests"/>

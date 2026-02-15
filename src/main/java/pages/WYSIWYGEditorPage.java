@@ -4,6 +4,7 @@ package pages;
 
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -11,25 +12,46 @@ import org.testng.Assert;
 public class WYSIWYGEditorPage extends BasePage {
 
     private final By textArea = By.id("tinymce");
+    private final By decreaseIndentButton = By.cssSelector("[aria-label='Decrease indent']");
 
     public WYSIWYGEditorPage(WebDriver driver){
         super(driver);
     }
 
-    public void assertEditorIsReadOnly() {
-        Allure.step("Verify editor is read only", () -> {
+    public boolean isEditorReadOnly() {
+        switchToEditArea();
+        WebElement editor = driver.findElement(textArea);
+        String contentEditable = editor.getAttribute("contenteditable");
+        String readOnly = editor.getAttribute("readonly");
+        switchToMainArea();
+
+        return "false".equalsIgnoreCase(contentEditable)
+                || "true".equalsIgnoreCase(readOnly)
+                || "readonly".equalsIgnoreCase(readOnly);
+    }
+
+    public void clearTextArea() {
+        Allure.step("Clear text area content", () -> {
             switchToEditArea();
-            WebElement editor = driver.findElement(textArea);
-            String contentEditable = editor.getAttribute("contenteditable");
-            String readOnly = editor.getAttribute("readonly");
+            driver.findElement(textArea)
+                    .sendKeys(Keys.chord(Keys.CONTROL, "A", Keys.BACK_SPACE));
             switchToMainArea();
-
-            boolean isReadOnly = "false".equalsIgnoreCase(contentEditable)
-                    || "true".equalsIgnoreCase(readOnly)
-                    || "readonly".equalsIgnoreCase(readOnly);
-
-            Assert.assertTrue(isReadOnly, "Editor is expected to be read only.");
         });
+    }
+
+    public void setTextArea(String text) {
+        Allure.step("Set text area content: " + text, () -> {
+            switchToEditArea();
+            driver.findElement(textArea).sendKeys(text);
+            switchToMainArea();
+        });
+    }
+
+    // Clicks the "Decrease indent" button in the editor
+    public void clickDecreaseIndent() {
+        Allure.step("Click Decrease Indent button", () ->
+                driver.findElement(decreaseIndentButton).click()
+        );
     }
 
     public void assertEditorText(String expectedText) {

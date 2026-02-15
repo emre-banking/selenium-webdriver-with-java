@@ -3,14 +3,15 @@
 
 package e2e.base;
 
+import e2e.utils.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import pages.HomePage;
-import e2e.utils.ConfigReader;
 
 @Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class BaseTests {
@@ -21,9 +22,16 @@ public class BaseTests {
     // Set up WebDriver and initialize the home page
     @BeforeClass
     public void setUp() {
-        baseUrl = ConfigReader.get("baseUrl");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        baseUrl = ConfigReader.getRequired("baseUrl");
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--window-size=1920,1080");
+
+        if (Boolean.parseBoolean(System.getenv().getOrDefault("CI", "false"))) {
+            options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage");
+        }
+
+        driver = new ChromeDriver(options);
         homePage = new HomePage(driver);
     }
 

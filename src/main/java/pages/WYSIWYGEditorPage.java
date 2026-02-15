@@ -6,6 +6,7 @@ import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class WYSIWYGEditorPage extends BasePage {
@@ -15,6 +16,18 @@ public class WYSIWYGEditorPage extends BasePage {
 
     public WYSIWYGEditorPage(WebDriver driver){
         super(driver);
+    }
+
+    public boolean isEditorReadOnly() {
+        switchToEditArea();
+        WebElement editor = driver.findElement(textArea);
+        String contentEditable = editor.getAttribute("contenteditable");
+        String readOnly = editor.getAttribute("readonly");
+        switchToMainArea();
+
+        return "false".equalsIgnoreCase(contentEditable)
+                || "true".equalsIgnoreCase(readOnly)
+                || "readonly".equalsIgnoreCase(readOnly);
     }
 
     public void clearTextArea() {

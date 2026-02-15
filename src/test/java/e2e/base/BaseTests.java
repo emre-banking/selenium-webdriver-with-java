@@ -10,10 +10,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
 import pages.HomePage;
 
-@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class BaseTests {
     protected WebDriver driver;
     protected HomePage homePage;

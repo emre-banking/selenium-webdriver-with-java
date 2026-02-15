@@ -104,22 +104,26 @@ public class AllureListener implements ITestListener {
     // --- Listener Events ---
     @Override
     public void onStart(ITestContext context) {
-        logger.info("Test context started: {}", context.getName());
+        logger.info("=== SUITE START: {} ===", context.getName());
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        logger.info("Test context finished: {}", context.getName());
+        int passed = context.getPassedTests().size();
+        int failed = context.getFailedTests().size();
+        int skipped = context.getSkippedTests().size();
+        logger.info("=== SUITE END: {} | passed={} failed={} skipped={} ===", context.getName(), passed, failed, skipped);
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        logger.info("Test started: {}", getTestMethodName(result));
+        // no-op: per-test start logs intentionally suppressed
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        logger.info("Test succeeded: {}", getTestMethodName(result));
+        String testName = getTestMethodName(result);
+        logger.info("Test ended: {} | status=passed", testName);
     }
 
     @Override
@@ -129,7 +133,7 @@ public class AllureListener implements ITestListener {
         WebDriver driver = extractDriver(result);
         if (driver != null) {
             try {
-                logger.info("Capturing screenshot for failed test: {}", method);
+                logger.info("[FAILURE ARTIFACT] screenshot | {}", method);
                 saveFailureScreenShot(driver); // Allure attachment (same thread)
             } catch (Throwable t) {
                 logger.error("Screenshot capture failed for test {}", method, t);
@@ -141,7 +145,8 @@ public class AllureListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        logger.warn("Test skipped: {}", getTestMethodName(result));
+        String testName = getTestMethodName(result);
+        logger.warn("Test ended: {} | status=skipped", testName);
     }
 
     @Override

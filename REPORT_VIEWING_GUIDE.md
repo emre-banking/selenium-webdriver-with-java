@@ -36,36 +36,43 @@ If you see versions numbers, you are ready.
 
 ---
 
-## Step 1) Run all tests
+## Step 1) Run UI and API tests separately
 
-In the IDE terminal, run:
+In the IDE terminal, run these commands in order:
 
 ```bash
-mvn clean test
+mvn clean "-Dsurefire.suiteXmlFiles=testng.xml" "-Dallure.results.directory=target/allure-results-ui" test
+mvn "-Dsurefire.suiteXmlFiles=testng-api.xml" "-Dallure.results.directory=target/allure-results-api" test
 ```
 
-Wait until it finishes. If you see `BUILD SUCCESS`, tests are done.
+Wait until both finish. If you see `BUILD SUCCESS`, test runs are done.
 
 ---
 
-## Step 2) Open the detailed report (Allure)
+## Step 2) Generate and open separate Allure reports
 
 In the same IDE terminal, run:
 
 ```bash
-allure generate target/allure-results --clean -o allure-report
-allure open allure-report -h 127.0.0.1 -p 5055
+allure generate target/allure-results-ui --clean -o allure-report-ui
+allure open allure-report-ui -h 127.0.0.1 -p 5055
+
+allure generate target/allure-results-api --clean -o allure-report-api
+allure open allure-report-api -h 127.0.0.1 -p 5056
 ```
 
-The report should open automatically in your default browser.
+Both reports should open automatically in your default browser.
 
 ---
 
 ## If something does not work
 
-### Problem: report is empty
+### Problem: one of the reports is empty
 
-Run `mvn clean test` first, then generate Allure report again.
+Run the related suite command again (UI or API), then regenerate that report.
+
+- UI results folder: `target/allure-results-ui`
+- API results folder: `target/allure-results-api`
 
 ### Problem: command runs in the wrong folder
 
@@ -73,12 +80,12 @@ Make sure your IDE terminal is in the project root (the folder that contains `po
 
 ### Problem: `Address already in use: bind`
 
-This means the port is already in use (usually `5055`).
+This means the selected port is already in use.
 
 Use a different port:
 
 ```bash
-allure open allure-report -h 127.0.0.1 -p 5056
+allure open allure-report-ui -h 127.0.0.1 -p 5057
 ```
 
 This should also open automatically in your default browser.

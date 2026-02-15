@@ -10,6 +10,7 @@ import constants.HomeLinks;
 
 public class BasePage {
 
+    // yeni yorum
     protected final WebDriver driver;
     protected final WebDriverWait wait;
     private static final Duration TIMEOUT = Duration.ofSeconds(5);

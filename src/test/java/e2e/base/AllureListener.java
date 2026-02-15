@@ -16,6 +16,9 @@ import java.lang.reflect.Method;
 public class AllureListener implements ITestListener {
 
     private static final Logger logger = LoggerFactory.getLogger(AllureListener.class);
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_GREEN = "\u001B[32m";
 
     private static String getTestMethodName(ITestResult iTestResult) {
         String methodName = iTestResult.getMethod().getConstructorOrMethod().getName();
@@ -104,7 +107,7 @@ public class AllureListener implements ITestListener {
     // --- Listener Events ---
     @Override
     public void onStart(ITestContext context) {
-        logger.info("=== SUITE START: {} ===", context.getName());
+        logger.info("{}=== SUITE START: {} ==={}", ANSI_CYAN, context.getName(), ANSI_RESET);
     }
 
     @Override
@@ -112,7 +115,7 @@ public class AllureListener implements ITestListener {
         int passed = context.getPassedTests().size();
         int failed = context.getFailedTests().size();
         int skipped = context.getSkippedTests().size();
-        logger.info("=== SUITE END: {} | passed={} failed={} skipped={} ===", context.getName(), passed, failed, skipped);
+        logger.info("{}=== SUITE END: {} | passed={} failed={} skipped={} ==={}", ANSI_GREEN, context.getName(), passed, failed, skipped, ANSI_RESET);
     }
 
     @Override

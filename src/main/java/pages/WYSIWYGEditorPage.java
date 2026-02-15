@@ -4,14 +4,16 @@ package pages;
 
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 public class WYSIWYGEditorPage extends BasePage {
 
     private final By textArea = By.id("tinymce");
+    private final By editorIframe = By.id("mce_0_ifr");
     private final By decreaseIndentButton = By.cssSelector("[aria-label='Decrease indent']");
 
     public WYSIWYGEditorPage(WebDriver driver){
@@ -33,8 +35,8 @@ public class WYSIWYGEditorPage extends BasePage {
     public void clearTextArea() {
         Allure.step("Clear text area content", () -> {
             switchToEditArea();
-            driver.findElement(textArea)
-                    .sendKeys(Keys.chord(Keys.CONTROL, "A", Keys.BACK_SPACE));
+            WebElement editor = wait.until(ExpectedConditions.visibilityOfElementLocated(textArea));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].textContent = '';", editor);
             switchToMainArea();
         });
     }
@@ -42,7 +44,8 @@ public class WYSIWYGEditorPage extends BasePage {
     public void setTextArea(String text) {
         Allure.step("Set text area content: " + text, () -> {
             switchToEditArea();
-            driver.findElement(textArea).sendKeys(text);
+            WebElement editor = wait.until(ExpectedConditions.visibilityOfElementLocated(textArea));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].textContent = arguments[1];", editor, text);
             switchToMainArea();
         });
     }
@@ -50,7 +53,7 @@ public class WYSIWYGEditorPage extends BasePage {
     // Clicks the "Decrease indent" button in the editor
     public void clickDecreaseIndent() {
         Allure.step("Click Decrease Indent button", () ->
-                driver.findElement(decreaseIndentButton).click()
+                wait.until(ExpectedConditions.elementToBeClickable(decreaseIndentButton)).click()
         );
     }
 
@@ -67,19 +70,18 @@ public class WYSIWYGEditorPage extends BasePage {
     // Retrieves the text from the text area in the editor
     private String getTextFromEditor(){
         switchToEditArea();
-        String text = driver.findElement(textArea).getText();
+        String text = wait.until(ExpectedConditions.visibilityOfElementLocated(textArea)).getText();
         switchToMainArea();
-        return text;
+        return text.trim();
     }
 
     // Switches the driver's focus to the editor's iframe
     private void switchToEditArea(){
-        String editorIframeId = "mce_0_ifr";
-        driver.switchTo().frame(editorIframeId);
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(editorIframe));
     }
 
     // Switches the driver's focus back to the main area from the editor's iframe
     private void switchToMainArea(){
-        driver.switchTo().parentFrame();
+        driver.switchTo().defaultContent();
     }
 }

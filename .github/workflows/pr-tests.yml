@@ -28,7 +28,28 @@ jobs:
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B -q -ntp -DskipTests -Dsonar.qualitygate.wait=true -Dsonar.qualitygate.timeout=300 verify sonar:sonar
+        run: |
+          if [ -z "$SONAR_HOST_URL" ]; then
+            echo "SONAR_HOST_URL is empty. Set repository secret SONAR_HOST_URL (example: https://sonarqube.company.com)."
+            exit 1
+          fi
+
+          if [[ ! "$SONAR_HOST_URL" =~ ^https?:// ]]; then
+            echo "SONAR_HOST_URL must start with http:// or https://. Current value: $SONAR_HOST_URL"
+            exit 1
+          fi
+
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "SONAR_TOKEN is empty. Set repository secret SONAR_TOKEN."
+            exit 1
+          fi
+
+          mvn -B -q -ntp -DskipTests \
+            -Dsonar.host.url="$SONAR_HOST_URL" \
+            -Dsonar.token="$SONAR_TOKEN" \
+            -Dsonar.qualitygate.wait=true \
+            -Dsonar.qualitygate.timeout=300 \
+            verify sonar:sonar
 
   test:
     if: github.event.pull_request.draft == false

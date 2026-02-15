@@ -17,16 +17,6 @@ public class AllureListener implements ITestListener {
 
     private static final Logger logger = LoggerFactory.getLogger(AllureListener.class);
 
-    private static boolean isGitHubActions() {
-        return "true".equalsIgnoreCase(System.getenv("GITHUB_ACTIONS"));
-    }
-
-    private static void emitGitHubNotice(String title, String message) {
-        if (isGitHubActions()) {
-            System.out.println("::notice title=" + title + "::" + message);
-        }
-    }
-
     private static String getTestMethodName(ITestResult iTestResult) {
         String methodName = iTestResult.getMethod().getConstructorOrMethod().getName();
         if (!"runScenario".equals(methodName)) {
@@ -115,7 +105,6 @@ public class AllureListener implements ITestListener {
     @Override
     public void onStart(ITestContext context) {
         logger.info("=== SUITE START: {} ===", context.getName());
-        emitGitHubNotice("Suite Start", context.getName());
     }
 
     @Override
@@ -124,10 +113,6 @@ public class AllureListener implements ITestListener {
         int failed = context.getFailedTests().size();
         int skipped = context.getSkippedTests().size();
         logger.info("=== SUITE END: {} | passed={} failed={} skipped={} ===", context.getName(), passed, failed, skipped);
-        emitGitHubNotice(
-                "Suite End",
-                context.getName() + " | passed=" + passed + " failed=" + failed + " skipped=" + skipped
-        );
     }
 
     @Override

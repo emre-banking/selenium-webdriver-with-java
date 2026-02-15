@@ -3,10 +3,8 @@
 package e2e.wait;
 
 import e2e.base.BaseTests;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class WaitTests extends BaseTests {
 
     @Test

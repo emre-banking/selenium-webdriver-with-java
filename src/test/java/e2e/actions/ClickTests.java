@@ -4,10 +4,8 @@ package e2e.actions;
 
 import e2e.base.BaseTests;
 import io.qameta.allure.Description;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class ClickTests extends BaseTests {
     private static final String expectedAlertText = "You selected a context menu";
 

@@ -10,6 +10,7 @@ import constants.HomeLinks;
 
 public class BasePage {
 
+    // yeni yorum
     protected final WebDriver driver;
     protected final WebDriverWait wait;
     private static final Duration TIMEOUT = Duration.ofSeconds(5);
@@ -22,6 +23,7 @@ public class BasePage {
     protected void clickLink(String linkText){
         By locator = By.xpath("//a[normalize-space()='" + linkText + "']");
         WebElement link = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        assert link != null;
         link.click();
     }
 

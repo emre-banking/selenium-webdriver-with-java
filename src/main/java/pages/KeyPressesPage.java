@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.util.Objects;
+
 public class KeyPressesPage extends BasePage {
 
     private final By textField = By.id("target");
@@ -19,7 +21,7 @@ public class KeyPressesPage extends BasePage {
 
     public void enterText(String text) {
         Allure.step("Enter text into the field", () ->
-                wait.until(ExpectedConditions.visibilityOfElementLocated(textField))
+                Objects.requireNonNull(wait.until(ExpectedConditions.visibilityOfElementLocated(textField)))
                 .sendKeys(text));
     }
 
@@ -35,6 +37,6 @@ public class KeyPressesPage extends BasePage {
 
     // Returns the text of the result element on the page
     private String getResult(){
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(resultText)).getText().trim();
+        return Objects.requireNonNull(wait.until(ExpectedConditions.visibilityOfElementLocated(resultText))).getText().trim();
     }
 }

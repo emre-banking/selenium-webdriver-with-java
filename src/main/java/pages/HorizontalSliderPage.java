@@ -10,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.util.Objects;
+
 public class HorizontalSliderPage extends BasePage {
 
     private final By slider = By.cssSelector("input[type='range']");
@@ -23,6 +25,7 @@ public class HorizontalSliderPage extends BasePage {
         Allure.step("Move slider " + steps + " steps using direction: " + direction.name(), () -> {
             WebElement sliderElement = wait.until(ExpectedConditions.elementToBeClickable(slider));
             for (int i = 0; i < steps; i++) {
+                assert sliderElement != null;
                 sliderElement.sendKeys(direction);
             }
         });
@@ -40,6 +43,6 @@ public class HorizontalSliderPage extends BasePage {
 
     // Returns the text value of the range element
     private String getSliderValue() {
-        return driver.findElement(slider).getAttribute("value").trim();
+        return Objects.requireNonNull(driver.findElement(slider).getAttribute("value")).trim();
     }
 }

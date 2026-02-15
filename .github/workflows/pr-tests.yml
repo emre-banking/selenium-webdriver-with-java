@@ -26,11 +26,11 @@ jobs:
 
       - name: SonarQube analysis and Quality Gate check
         env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL || vars.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           if [ -z "$SONAR_HOST_URL" ]; then
-            echo "SONAR_HOST_URL is empty. Set repository secret SONAR_HOST_URL (example: https://sonarqube.company.com)."
+            echo "SONAR_HOST_URL is empty. Set repository secret SONAR_HOST_URL or repository variable SONAR_HOST_URL (example: https://sonarqube.company.com)."
             exit 1
           fi
 

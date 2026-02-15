@@ -15,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <allure.version>2.27.0</allure.version>
         <aspectj.version>1.9.21</aspectj.version>
+        <cucumber.version>7.13.0</cucumber.version>
     </properties>
 
     <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->
@@ -45,6 +46,37 @@
             <artifactId>testng</artifactId>
             <version>7.10.2</version>
         </dependency>
+        <!-- Cucumber Java:
+             Core library to define Gherkin steps and glue code -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Cucumber TestNG integration:
+             Enables running Cucumber scenarios through TestNG runner -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Rest Assured:
+             HTTP client/assertion library for API test automation -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.5.0</version>
+            <scope>test</scope>
+        </dependency>
+           <!-- Allure Java commons:
+               Provides io.qameta.allure.Allure API used in page classes -->
+           <dependency>
+              <groupId>io.qameta.allure</groupId>
+              <artifactId>allure-java-commons</artifactId>
+              <version>${allure.version}</version>
+           </dependency>
         <!-- JavaFaker:
              Utility library for generating fake test data such as names, emails, addresses -->
         <dependency>
@@ -52,12 +84,13 @@
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
-        <!-- Allure TestNG integration:
-             Provides Allure reporting support for TestNG test executions -->
+        <!-- Allure Cucumber adapter:
+             Enables Allure reporting for Cucumber scenario execution -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>2.27.0</version>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
         </dependency>
         <!-- AspectJ Weaver:
              Required by Allure to intercept TestNG events and enable step annotations + attachments -->
@@ -91,12 +124,13 @@
                 <configuration>
                     <argLine>
                         -javaagent:"${user.home}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        -Djava.util.logging.config.file=src/test/resources/logging.properties
                     </argLine>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
-                        <allure.results.directory>allure-results</allure.results.directory>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

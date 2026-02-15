@@ -41,7 +41,7 @@ If you see versions numbers, you are ready.
 In the IDE terminal, run:
 
 ```bash
-mvn test
+mvn clean test
 ```
 
 Wait until it finishes. If you see `BUILD SUCCESS`, tests are done.
@@ -53,7 +53,7 @@ Wait until it finishes. If you see `BUILD SUCCESS`, tests are done.
 In the same IDE terminal, run:
 
 ```bash
-allure generate allure-results --clean -o allure-report
+allure generate target/allure-results --clean -o allure-report
 allure open allure-report -h 127.0.0.1 -p 5055
 ```
 
@@ -65,7 +65,7 @@ The report should open automatically in your default browser.
 
 ### Problem: report is empty
 
-Run `mvn test` first, then generate Allure report again.
+Run `mvn clean test` first, then generate Allure report again.
 
 ### Problem: command runs in the wrong folder
 

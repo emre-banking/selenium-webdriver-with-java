@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="UI Test Suite" parallel="classes" thread-count="10" data-provider-thread-count="10">
+<suite name="API Test Suite" parallel="classes" thread-count="10" data-provider-thread-count="10">
     <listeners>
         <listener class-name="e2e.base.AllureListener"/>
     </listeners>
-    <test name="UI Tests">
+    <test name="API Cucumber Tests">
         <classes>
-            <class name="e2e.cucumber.CucumberTestRunner"/>
+            <class name="api.cucumber.ApiCucumberTestRunner"/>
         </classes>
     </test>
 </suite>

@@ -22,8 +22,11 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Run tests
-        run: mvn -B test
+      - name: Run UI suite
+        run: mvn -B "-Dsurefire.suiteXmlFiles=testng.xml" "-Dallure.results.directory=target/allure-results-ui" test
+
+      - name: Run API suite
+        run: mvn -B "-Dsurefire.suiteXmlFiles=testng-api.xml" "-Dallure.results.directory=target/allure-results-api" test
 
       - name: Upload Surefire reports
         if: always()
@@ -37,19 +40,36 @@ jobs:
         if: always()
         run: npm install -g allure-commandline
 
-      - name: Generate Allure HTML report
+      - name: Generate UI Allure HTML report
         if: always()
         run: |
-          if [ -d "allure-results" ]; then
-            allure generate allure-results --clean --single-file -o allure-report
+          if [ -d "target/allure-results-ui" ]; then
+            allure generate target/allure-results-ui --clean --single-file -o allure-report-ui
           else
-            echo "allure-results folder not found, skipping report generation"
+            echo "target/allure-results-ui folder not found, skipping UI report generation"
           fi
 
-      - name: Upload Allure HTML report
+      - name: Generate API Allure HTML report
+        if: always()
+        run: |
+          if [ -d "target/allure-results-api" ]; then
+            allure generate target/allure-results-api --clean --single-file -o allure-report-api
+          else
+            echo "target/allure-results-api folder not found, skipping API report generation"
+          fi
+
+      - name: Upload UI Allure HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report-${{ github.run_number }}
-          path: allure-report/
+          name: allure-report-ui-${{ github.run_number }}
+          path: allure-report-ui/
+          if-no-files-found: warn
+
+      - name: Upload API Allure HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-api-${{ github.run_number }}
+          path: allure-report-api/
           if-no-files-found: warn

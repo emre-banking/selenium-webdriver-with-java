@@ -144,7 +144,7 @@ mvn test
 From the project root:
 
 ```bash
-mvn test
+mvn clean test
 ```
 
 What this does:
@@ -153,7 +153,7 @@ What this does:
 - Executes Cucumber scenarios through `e2e.cucumber.CucumberTestRunner`
 - Executes tests in parallel by class (`thread-count=10`)
 - Writes standard results to `target/surefire-reports`
-- Writes Allure raw results to `allure-results`
+- Writes Allure raw results to `target/allure-results`
 
 ## Cucumber Structure
 
@@ -171,7 +171,7 @@ For IDE-focused report usage, see:
 Quick local commands:
 
 ```bash
-allure generate allure-results --clean -o allure-report
+allure generate target/allure-results --clean -o allure-report
 allure open allure-report -h 127.0.0.1 -p 5055
 ```
 

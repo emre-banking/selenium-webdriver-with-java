@@ -69,13 +69,6 @@
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
-        <!-- Allure TestNG integration:
-             Provides Allure reporting support for TestNG test executions -->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>2.27.0</version>
-        </dependency>
         <!-- Allure Cucumber adapter:
              Enables Allure reporting for Cucumber scenario execution -->
         <dependency>
@@ -122,7 +115,7 @@
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
-                        <allure.results.directory>allure-results</allure.results.directory>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

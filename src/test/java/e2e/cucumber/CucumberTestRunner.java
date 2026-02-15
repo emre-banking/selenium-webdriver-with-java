@@ -8,7 +8,6 @@ import org.testng.annotations.DataProvider;
         features = "src/test/resources/features",
         glue = "e2e.cucumber",
         plugin = {
-                "pretty",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
         },
         monochrome = true

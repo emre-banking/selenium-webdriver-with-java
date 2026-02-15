@@ -10,12 +10,49 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.lang.reflect.Method;
+
 public class AllureListener implements ITestListener {
 
     private static final Logger logger = LoggerFactory.getLogger(AllureListener.class);
 
     private static String getTestMethodName(ITestResult iTestResult) {
-        return iTestResult.getMethod().getConstructorOrMethod().getName();
+        String methodName = iTestResult.getMethod().getConstructorOrMethod().getName();
+        if (!"runScenario".equals(methodName)) {
+            return methodName;
+        }
+
+        Object[] parameters = iTestResult.getParameters();
+        for (Object parameter : parameters) {
+            if (parameter == null) {
+                continue;
+            }
+
+            String scenarioName = extractScenarioName(parameter);
+            if (scenarioName != null && !scenarioName.isBlank()) {
+                return scenarioName;
+            }
+        }
+
+        return methodName;
+    }
+
+    private static String extractScenarioName(Object parameter) {
+        try {
+            Method getPickle = parameter.getClass().getMethod("getPickle");
+            Object pickle = getPickle.invoke(parameter);
+            if (pickle != null) {
+                Method getName = pickle.getClass().getMethod("getName");
+                Object name = getName.invoke(pickle);
+                if (name != null) {
+                    return name.toString();
+                }
+            }
+        } catch (Exception ignored) {
+        }
+
+        String asText = parameter.toString();
+        return (asText != null && !asText.isBlank()) ? asText : null;
     }
 
     // --- Allure Attachments ---

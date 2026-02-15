@@ -13,8 +13,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import pages.HomePage;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class BaseTests {
+    static {
+        Logger.getLogger("org.openqa.selenium.devtools.CdpVersionFinder").setLevel(Level.SEVERE);
+    }
+
     protected WebDriver driver;
     protected HomePage homePage;
     private String baseUrl;

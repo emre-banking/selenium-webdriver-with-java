@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="UI Test Suite" parallel="classes" thread-count="10">
+<suite name="UI Test Suite" parallel="classes" thread-count="10" data-provider-thread-count="10">
     <listeners>
         <listener class-name="e2e.base.AllureListener"/>
     </listeners>
     <test name="UI Tests">
         <classes>
-            <class name="e2e.actions.ClickTests"/>
-            <class name="e2e.alerts.AlertTests"/>
             <class name="e2e.cucumber.CucumberTestRunner"/>
-            <class name="e2e.dropdown.DropdownTests"/>
-            <class name="e2e.frames.FrameTests"/>
-            <class name="e2e.horizontalslider.HorizontalSliderTests"/>
-            <class name="e2e.hover.HoverTests"/>
-            <class name="e2e.keypresses.KeyPressesTests"/>
-            <class name="e2e.wait.WaitTests"/>
         </classes>
     </test>
 </suite>

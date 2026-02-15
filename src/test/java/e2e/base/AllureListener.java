@@ -104,32 +104,39 @@ public class AllureListener implements ITestListener {
     // --- Listener Events ---
     @Override
     public void onStart(ITestContext context) {
-        logger.info("Test context started: {}", context.getName());
+        logger.info("=== SUITE START: {} ===", context.getName());
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        logger.info("Test context finished: {}", context.getName());
+        int passed = context.getPassedTests().size();
+        int failed = context.getFailedTests().size();
+        int skipped = context.getSkippedTests().size();
+        logger.info("=== SUITE END: {} | passed={} failed={} skipped={} ===", context.getName(), passed, failed, skipped);
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        logger.info("Test started: {}", getTestMethodName(result));
+        String testName = getTestMethodName(result);
+        logger.info("[TEST START] {} | thread={}", testName, Thread.currentThread().getName());
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        logger.info("Test succeeded: {}", getTestMethodName(result));
+        String testName = getTestMethodName(result);
+        long durationMs = Math.max(0, result.getEndMillis() - result.getStartMillis());
+        logger.info("[TEST END] {} | status=PASSED | duration={}ms", testName, durationMs);
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         String method = getTestMethodName(result);
-        logger.error("Test failed: {}", method);
+        long durationMs = Math.max(0, result.getEndMillis() - result.getStartMillis());
+        logger.error("[TEST END] {} | status=FAILED | duration={}ms", method, durationMs);
         WebDriver driver = extractDriver(result);
         if (driver != null) {
             try {
-                logger.info("Capturing screenshot for failed test: {}", method);
+                logger.info("[FAILURE ARTIFACT] screenshot | {}", method);
                 saveFailureScreenShot(driver); // Allure attachment (same thread)
             } catch (Throwable t) {
                 logger.error("Screenshot capture failed for test {}", method, t);
@@ -141,7 +148,9 @@ public class AllureListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        logger.warn("Test skipped: {}", getTestMethodName(result));
+        String testName = getTestMethodName(result);
+        long durationMs = Math.max(0, result.getEndMillis() - result.getStartMillis());
+        logger.warn("[TEST END] {} | status=SKIPPED | duration={}ms", testName, durationMs);
     }
 
     @Override

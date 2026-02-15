@@ -23,10 +23,10 @@ jobs:
           cache: maven
 
       - name: Run UI suite
-        run: mvn -B "-Dsurefire.suiteXmlFiles=testng.xml" "-Dallure.results.directory=target/allure-results-ui" test
+        run: mvn -B -q -ntp "-Dsurefire.suiteXmlFiles=testng.xml" "-Dallure.results.directory=target/allure-results-ui" test
 
       - name: Run API suite
-        run: mvn -B "-Dsurefire.suiteXmlFiles=testng-api.xml" "-Dallure.results.directory=target/allure-results-api" test
+        run: mvn -B -q -ntp "-Dsurefire.suiteXmlFiles=testng-api.xml" "-Dallure.results.directory=target/allure-results-api" test
 
       - name: Upload Surefire reports
         if: always()

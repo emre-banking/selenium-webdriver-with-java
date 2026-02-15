@@ -42,3 +42,10 @@ allure-results/
 allure-report/
 allure-report-ui/
 allure-report-api/
+
+### Node / ESLint ###
+node_modules/
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

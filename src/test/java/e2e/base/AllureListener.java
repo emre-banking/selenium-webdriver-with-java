@@ -117,22 +117,19 @@ public class AllureListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        String testName = getTestMethodName(result);
-        logger.info("[TEST START] {} | thread={}", testName, Thread.currentThread().getName());
+        // no-op: per-test start logs intentionally suppressed
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         String testName = getTestMethodName(result);
-        long durationMs = Math.max(0, result.getEndMillis() - result.getStartMillis());
-        logger.info("[TEST END] {} | status=PASSED | duration={}ms", testName, durationMs);
+        logger.info("Test ended: {} | status=passed", testName);
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         String method = getTestMethodName(result);
-        long durationMs = Math.max(0, result.getEndMillis() - result.getStartMillis());
-        logger.error("[TEST END] {} | status=FAILED | duration={}ms", method, durationMs);
+        logger.error("Test failed: {}", method);
         WebDriver driver = extractDriver(result);
         if (driver != null) {
             try {
@@ -149,8 +146,7 @@ public class AllureListener implements ITestListener {
     @Override
     public void onTestSkipped(ITestResult result) {
         String testName = getTestMethodName(result);
-        long durationMs = Math.max(0, result.getEndMillis() - result.getStartMillis());
-        logger.warn("[TEST END] {} | status=SKIPPED | duration={}ms", testName, durationMs);
+        logger.warn("Test ended: {} | status=skipped", testName);
     }
 
     @Override

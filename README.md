@@ -162,6 +162,20 @@ What this does:
 - Step definitions: `src/test/java/e2e/cucumber/steps`
 - Hooks (driver lifecycle): `src/test/java/e2e/cucumber/hooks`
 
+## API Cucumber Scaffold
+
+- API features: `src/test/resources/api/features`
+- API runner: `src/test/java/api/cucumber/ApiCucumberTestRunner.java`
+- API step definitions: `src/test/java/api/cucumber/steps`
+- API hooks/context: `src/test/java/api/cucumber/hooks` + `src/test/java/api/cucumber/context`
+- API client layer: `src/test/java/api/client`
+
+Run API suite only:
+
+```bash
+mvn -Dsurefire.suiteXmlFiles=testng-api.xml test
+```
+
 ## View Reports
 
 For IDE-focused report usage, see:

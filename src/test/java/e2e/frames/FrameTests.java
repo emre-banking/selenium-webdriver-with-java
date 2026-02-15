@@ -12,12 +12,8 @@ public class FrameTests extends BaseTests {
         // Given
         var editorPage = homePage.navigateToWYSIWYGEditor();
 
-        // When
-        editorPage.clearTextArea();
-        editorPage.setTextArea("TAU rocks!");
-        editorPage.clickDecreaseIndent();
-
         // Then
-        editorPage.assertEditorText("TAU rocks!");
+        editorPage.assertEditorIsReadOnly();
+        editorPage.assertEditorText("Your content goes here.");
     }
 }

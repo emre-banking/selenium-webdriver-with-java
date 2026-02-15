@@ -33,14 +33,6 @@ jobs:
           path: target/surefire-reports/
           if-no-files-found: warn
 
-      - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results-${{ github.run_number }}
-          path: allure-results/
-          if-no-files-found: warn
-
       - name: Install Allure CLI
         if: always()
         run: npm install -g allure-commandline

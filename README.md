@@ -1,6 +1,6 @@
-# Selenium WebDriver with Java (TestNG + Allure)
+# Selenium WebDriver with Java (TestNG + Cucumber + Allure)
 
-A UI test automation project built with Java, Selenium WebDriver, and TestNG.
+A UI test automation project built with Java, Selenium WebDriver, TestNG, and Cucumber.
 
 This repository validates common UI scenarios on [the-internet.herokuapp.com](https://the-internet.herokuapp.com/) using the Page Object Model (POM), with Allure integration for rich reporting.
 
@@ -34,6 +34,7 @@ Key design choices:
 
 - **Page Object Model** for maintainable UI interactions
 - **TestNG suite execution** via `testng.xml`
+- **BDD support with Cucumber** (Gherkin feature files + step definitions)
 - **Allure reporting** for detailed execution insights
 - **Headless CI mode** triggered by `CI=true`
 
@@ -43,7 +44,9 @@ Key design choices:
 - Maven
 - Selenium WebDriver `4.38.0`
 - TestNG `7.10.2`
+- Cucumber (`cucumber-java` + `cucumber-testng`)
 - Allure TestNG `2.27.0`
+- Allure Cucumber 7 JVM `2.27.0`
 - SLF4J + Logback
 
 ## Project Structure
@@ -147,9 +150,17 @@ mvn test
 What this does:
 
 - Runs TestNG suite defined in `testng.xml`
+- Executes Cucumber scenarios through `e2e.cucumber.CucumberTestRunner`
 - Executes tests in parallel by class (`thread-count=10`)
 - Writes standard results to `target/surefire-reports`
 - Writes Allure raw results to `allure-results`
+
+## Cucumber Structure
+
+- Feature files: `src/test/resources/features`
+- Cucumber runner: `src/test/java/e2e/cucumber/CucumberTestRunner.java`
+- Step definitions: `src/test/java/e2e/cucumber/steps`
+- Hooks (driver lifecycle): `src/test/java/e2e/cucumber/hooks`
 
 ## View Reports
 

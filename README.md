@@ -110,6 +110,32 @@ password=SuperSecretPassword!
 
 You can update this file for different environments or test users.
 
+Override order is:
+
+1. Java system property (e.g. `-Dusername=...`)
+2. Environment variable with `E2E_` prefix (e.g. `E2E_USERNAME=...`)
+3. Value from `config.properties`
+
+Examples:
+
+```bash
+mvn test -DbaseUrl=https://the-internet.herokuapp.com/ -Dusername=tomsmith -Dpassword=SuperSecretPassword!
+```
+
+```bash
+# Linux / macOS
+export E2E_USERNAME=tomsmith
+export E2E_PASSWORD=SuperSecretPassword!
+mvn test
+```
+
+```powershell
+# Windows PowerShell
+$env:E2E_USERNAME="tomsmith"
+$env:E2E_PASSWORD="SuperSecretPassword!"
+mvn test
+```
+
 ## Run Tests Locally
 
 From the project root:

@@ -24,6 +24,21 @@ public class ConfigReader {
     }
 
     public static String get(String key) {
+        String systemValue = System.getProperty(key);
+        if (systemValue != null && !systemValue.trim().isEmpty()) {
+            return systemValue;
+        }
+
+        String normalizedEnvKey = key
+                .replace('.', '_')
+                .replace('-', '_')
+                .toUpperCase();
+
+        String normalizedEnvValue = System.getenv("E2E_" + normalizedEnvKey);
+        if (normalizedEnvValue != null && !normalizedEnvValue.trim().isEmpty()) {
+            return normalizedEnvValue;
+        }
+
         return properties.getProperty(key);
     }
 

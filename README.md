@@ -1,52 +1,61 @@
 # Selenium WebDriver with Java (TestNG + Cucumber + Allure)
 
-A UI test automation project built with Java, Selenium WebDriver, TestNG, and Cucumber.
+This repository contains UI and API test automation for https://the-internet.herokuapp.com/.
 
-This repository validates common UI scenarios on [the-internet.herokuapp.com](https://the-internet.herokuapp.com/) using the Page Object Model (POM), with Allure integration for rich reporting.
+Core approach:
+
+- Java 17 + Maven
+- Selenium WebDriver for UI
+- Rest Assured for API
+- Cucumber + TestNG runners
+- Allure reporting
+- Page Object Model for UI pages
 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Cucumber Status](#cucumber-status)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Configuration](#configuration)
-- [Run Tests Locally](#run-tests-locally)
-- [View Reports](#view-reports)
+- [Run Tests](#run-tests)
+- [Reports](#reports)
 - [CI Pipeline](#ci-pipeline)
+- [Linting](#linting)
 - [Troubleshooting](#troubleshooting)
 
 ## Overview
 
-The project includes end-to-end tests for flows such as:
+UI coverage includes scenarios such as context menu, alerts, dropdown, dynamic loading, slider, hover, key presses, login, and WYSIWYG editor interactions.
 
-- Context menu / click actions
-- JavaScript alerts
-- Dropdown selection
-- iFrame editor interactions
-- Hover behaviors
-- Key press capture
-- Login flow
-- Dynamic loading / waits
-- Horizontal slider interactions
+API coverage currently includes a Cucumber health-check flow.
 
-Key design choices:
+UI akışı:
 
-- **Page Object Model** for maintainable UI interactions
-- **TestNG suite execution** via `testng.xml`
-- **BDD support with Cucumber** (Gherkin feature files + step definitions)
-- **Allure reporting** for detailed execution insights
-- **Headless CI mode** triggered by `CI=true`
+- TestNG suite: `testng.xml`
+- Runner: `e2e.cucumber.CucumberTestRunner`
+- Features: `src/test/resources/features`
+- Steps: `src/test/java/e2e/cucumber/steps`
+- Hooks: `src/test/java/e2e/cucumber/hooks`
+
+API akışı:
+
+- TestNG suite: `testng-api.xml`
+- Runner: `api.cucumber.ApiCucumberTestRunner`
+- Features: `src/test/resources/api/features`
+- Steps: `src/test/java/api/cucumber/steps`
+- Hooks: `src/test/java/api/cucumber/hooks`
 
 ## Tech Stack
 
-- Java 17+ (project compiles for Java 17)
+- Java 17
 - Maven
-- Selenium WebDriver `4.38.0`
-- TestNG `7.10.2`
-- Cucumber (`cucumber-java` + `cucumber-testng`)
-- Allure TestNG `2.27.0`
-- Allure Cucumber 7 JVM `2.27.0`
+- Selenium WebDriver
+- TestNG
+- Cucumber (`cucumber-java`, `cucumber-testng`)
+- Rest Assured
+- Allure (`allure-cucumber7-jvm`, `allure-java-commons`)
 - SLF4J + Logback
 
 ## Project Structure
@@ -56,38 +65,56 @@ Key design choices:
 ├── .github/workflows/pr-tests.yml
 ├── pom.xml
 ├── testng.xml
+├── testng-api.xml
 ├── REPORT_VIEWING_GUIDE.md
-├── src
-│   ├── main/java
-│   │   ├── constants
-│   │   └── pages
-│   └── test
-│       ├── java/e2e
-│       │   ├── actions
-│       │   ├── alerts
-│       │   ├── base
-│       │   ├── dropdown
-│       │   ├── frames
-│       │   ├── horizontalslider
-│       │   ├── hover
-│       │   ├── keypresses
-│       │   ├── login
-│       │   ├── utils
-│       │   └── wait
-│       └── resources/config.properties
-└── README.md
+├── package.json
+├── eslint.config.js
+└── src
+    ├── main/java
+    │   ├── constants
+    │   │   └── HomeLinks.java
+    │   └── pages
+    │       ├── BasePage.java
+    │       ├── HomePage.java
+    │       └── ...
+    └── test
+        ├── java
+        │   ├── e2e
+        │   │   ├── base
+        │   │   │   └── AllureListener.java
+        │   │   ├── cucumber
+        │   │   │   ├── CucumberTestRunner.java
+        │   │   │   ├── CucumberTestContext.java
+        │   │   │   ├── hooks
+        │   │   │   └── steps
+        │   │   └── utils
+        │   │       └── ConfigReader.java
+        │   └── api
+        │       ├── client
+        │       └── cucumber
+        │           ├── ApiCucumberTestRunner.java
+        │           ├── context
+        │           ├── hooks
+        │           └── steps
+        └── resources
+            ├── config.properties
+            ├── logging.properties
+            ├── features
+            └── api/features
 ```
 
 ## Prerequisites
 
-Install the following before running tests:
-
-- Java (17+)
+- Java 17+
 - Maven
-- Google Chrome browser
+- Google Chrome
 - Allure CLI (for local report viewing)
 
-### Verify installation
+Optional (only for lint):
+
+- Node.js + npm
+
+Verify installation:
 
 ```bash
 java -version
@@ -95,11 +122,9 @@ mvn -v
 allure --version
 ```
 
-> If `allure` is not recognized, install Allure CLI and restart your IDE/terminal.
-
 ## Configuration
 
-Default test configuration is in:
+Default config file:
 
 - `src/test/resources/config.properties`
 
@@ -111,127 +136,87 @@ username=tomsmith
 password=SuperSecretPassword!
 ```
 
-You can update this file for different environments or test users.
+Override priority:
 
-Override order is:
-
-1. Java system property (e.g. `-Dusername=...`)
-2. Environment variable with `E2E_` prefix (e.g. `E2E_USERNAME=...`)
+1. Java system property (`-Dusername=...`)
+2. Environment variable with `E2E_` prefix (`E2E_USERNAME=...`)
 3. Value from `config.properties`
 
-Examples:
+## Run Tests
 
-```bash
-mvn test -DbaseUrl=https://the-internet.herokuapp.com/ -Dusername=tomsmith -Dpassword=SuperSecretPassword!
-```
-
-```bash
-# Linux / macOS
-export E2E_USERNAME=tomsmith
-export E2E_PASSWORD=SuperSecretPassword!
-mvn test
-```
-
-```powershell
-# Windows PowerShell
-$env:E2E_USERNAME="tomsmith"
-$env:E2E_PASSWORD="SuperSecretPassword!"
-mvn test
-```
-
-## Run Tests Locally
-
-From the project root:
+Run all tests (default surefire suite in `pom.xml`):
 
 ```bash
 mvn clean test
 ```
 
-What this does:
+Run UI suite only:
 
-- Runs TestNG suite defined in `testng.xml`
-- Executes Cucumber scenarios through `e2e.cucumber.CucumberTestRunner`
-- Executes tests in parallel by class (`thread-count=10`)
-- Writes standard results to `target/surefire-reports`
-- Writes Allure raw results to `target/allure-results`
-
-## Cucumber Structure
-
-- Feature files: `src/test/resources/features`
-- Cucumber runner: `src/test/java/e2e/cucumber/CucumberTestRunner.java`
-- Step definitions: `src/test/java/e2e/cucumber/steps`
-- Hooks (driver lifecycle): `src/test/java/e2e/cucumber/hooks`
-
-## API Cucumber Scaffold
-
-- API features: `src/test/resources/api/features`
-- API runner: `src/test/java/api/cucumber/ApiCucumberTestRunner.java`
-- API step definitions: `src/test/java/api/cucumber/steps`
-- API hooks/context: `src/test/java/api/cucumber/hooks` + `src/test/java/api/cucumber/context`
-- API client layer: `src/test/java/api/client`
+```bash
+mvn "-Dsurefire.suiteXmlFiles=testng.xml" "-Dallure.results.directory=target/allure-results-ui" test
+```
 
 Run API suite only:
 
 ```bash
-mvn -Dsurefire.suiteXmlFiles=testng-api.xml test
+mvn "-Dsurefire.suiteXmlFiles=testng-api.xml" "-Dallure.results.directory=target/allure-results-api" test
 ```
 
-## View Reports
+## Reports
 
-For IDE-focused report usage, see:
+Detailed guide:
 
 - `REPORT_VIEWING_GUIDE.md`
 
-Quick local commands:
+Quick commands:
 
 ```bash
-allure generate target/allure-results --clean -o allure-report
-allure open allure-report -h 127.0.0.1 -p 5055
-```
+allure generate target/allure-results-ui --clean -o allure-report-ui
+allure open allure-report-ui -h 127.0.0.1 -p 5055
 
-If port `5055` is already used, run:
-
-```bash
-allure open allure-report -h 127.0.0.1 -p 5056
+allure generate target/allure-results-api --clean -o allure-report-api
+allure open allure-report-api -h 127.0.0.1 -p 5056
 ```
 
 ## CI Pipeline
 
-PR workflow:
+PR workflow file: `.github/workflows/pr-tests.yml`
 
-- File: `.github/workflows/pr-tests.yml`
-- Trigger: PR events (`opened`, `synchronize`, `reopened`, `ready_for_review`)
-- Skips draft PRs (`if: github.event.pull_request.draft == false`)
-- Runs `mvn -B test`
+Current behavior:
+
+- Trigger: `pull_request` (`opened`, `synchronize`, `reopened`, `ready_for_review`)
+- Skips draft PRs
+- Runs UI suite and API suite separately
 - Uploads artifacts:
-  - `surefire-reports-<run_number>`
-  - `allure-report-<run_number>` (generated in single-file mode)
+  - Surefire reports
+  - UI Allure HTML report
+  - API Allure HTML report
 
-This allows opening the CI report directly from workflow artifacts.
+## Linting
+
+If you are editing JavaScript tooling/config files, run:
+
+```bash
+npm install
+npm run lint
+```
 
 ## Troubleshooting
 
-### 1) `allure` command not found
+### `allure` command not found
 
 - Install Allure CLI
-- Restart IDE / terminal
+- Restart terminal/IDE
 - Re-run `allure --version`
 
-### 2) `Address already in use: bind`
-
-Another process is already using the selected port.
+### Port already in use (`Address already in use: bind`)
 
 Use a different port:
 
 ```bash
-allure open allure-report -h 127.0.0.1 -p 5056
+allure open allure-report-ui -h 127.0.0.1 -p 5057
 ```
 
-### 3) Report looks blank when opened from ZIP temp path
+### Empty report
 
-Extract the downloaded artifact first, then open `index.html` from the extracted folder.
-
-### 4) Browser startup issues in CI/local
-
-Tests use `ChromeDriver` with Chrome options and headless mode in CI (`CI=true`).
-Make sure Chrome is installed locally and compatible with your environment.
+Re-run the related suite (UI or API), then regenerate the corresponding report directory.
